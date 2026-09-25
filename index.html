@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>Spider Solitaire</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&family=Cinzel:wght@600;700;900&family=Josefin+Sans:wght@400;600;700&family=Orbitron:wght@600;700;900&family=Exo+2:wght@400;600;700&display=swap">
 <style>
   :root {
     --felt: #1a4536;
@@ -556,6 +556,202 @@
   }
   :root[data-skin="classic"] .done .mini { font-family: system-ui, sans-serif; }
   .dock { display: none; }
+  /* ---------- Walnut: dark wood table, cream beveled paper, gold inlay ---------- */
+  :root:is([data-skin="walnut"],[data-skin="deco"]) {
+    --felt: #4a2c1c;
+    --felt-deep: #2c1810;
+    --felt-line: rgba(230, 200, 140, 0.35);
+    --felt-ink: #f4e7cf;
+    --felt-ink-dim: rgba(244, 231, 207, 0.72);
+    --card: #f6efdf;
+    --card-edge: #b99a6a;
+    --card-shadow: rgba(20, 8, 2, 0.55);
+    --back: #6b1f2a;
+    --back-2: #4a1119;
+    --back-line: rgba(232, 197, 120, 0.55);
+    --back-edge: #2e0a10;
+    --red: #9b2331;
+    --black: #2a1d14;
+    --brass: #d9b464;
+    --brass-hover: #e8c87e;
+    --brass-soft: rgba(217, 180, 100, 0.35);
+    --on-brass: #2c1810;
+    --red-soft: #e07a86;
+    --mint: #e8d5a3;
+    --mint-soft: rgba(232, 213, 163, 0.35);
+    --ui-font: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+    --display-font: "Playfair Display", "Iowan Old Style", Georgia, serif;
+    --rank-font: "Playfair Display", "Iowan Old Style", Georgia, serif;
+    --body-bg:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.9' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.09 0 0 0 0 0.05 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E"),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.10) 0 3px, transparent 3px 11px, rgba(255,220,160,0.05) 11px 13px, transparent 13px 29px),
+      linear-gradient(180deg, #5a3620 0%, #3d2214 55%, #2c1810 100%);
+    --btn-bg: linear-gradient(180deg, #6b432a, #45291a);
+    --btn-bg-hover: linear-gradient(180deg, #7a4f32, #52311f);
+    --scrim: rgba(20, 10, 4, 0.72);
+    --toast-bg: #2c1810;
+    --toast-ink: #f4e7cf;
+    --panel-bg: linear-gradient(180deg, #4a2c1c, #2e1a10);
+    --r-card: calc(var(--cw) * 0.07);
+    --r-btn: 8px;
+    --r-panel: 14px;
+    --ui-size: 14px;
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .btn, :root:is([data-skin="walnut"],[data-skin="deco"]) .skin select, :root:is([data-skin="walnut"],[data-skin="deco"]) .choice, :root:is([data-skin="walnut"],[data-skin="deco"]) .key, :root:is([data-skin="walnut"],[data-skin="deco"]) .tool, :root:is([data-skin="walnut"],[data-skin="deco"]) .dock-btn {
+    border: 1px solid #23120a;
+    box-shadow: inset 0 1px 0 rgba(255, 225, 170, 0.35), inset 0 -1px 0 rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.45);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.45);
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .btn.primary { background: linear-gradient(180deg, #e8c87e, #c9a35e); border-color: #7a5a22; text-shadow: 0 1px 0 rgba(255,255,255,0.35); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .brand h1 { font-weight: 700; color: var(--brass); text-shadow: 0 1px 0 rgba(0,0,0,0.5); letter-spacing: 0.01em; }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .brand .diff, :root:is([data-skin="walnut"],[data-skin="deco"]) .eyebrow { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .stats b { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .panel { border: 1px solid #7a5a22; box-shadow: inset 0 0 0 1px rgba(217,180,100,0.35), 0 30px 60px rgba(0,0,0,0.6); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .panel h2 { color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .choice { background: linear-gradient(180deg, #6b432a, #45291a); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .choice:hover { border-color: var(--brass); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .stats-table td, :root:is([data-skin="walnut"],[data-skin="deco"]) .stats-table th { border-color: rgba(217,180,100,0.3); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .toast { border-color: #7a5a22; }
+  /* spider cards: paper with bevel, gold-on-burgundy backs */
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .card.up {
+    background: linear-gradient(180deg, #faf4e6, #f0e6d0);
+    border-color: var(--card-edge);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(120,90,40,0.25), inset 1px 0 0 rgba(255,255,255,0.6), 0 2px 4px var(--card-shadow);
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .card.down, :root:is([data-skin="walnut"],[data-skin="deco"]) .stock .stack .back {
+    background:
+      radial-gradient(circle at 50% 50%, transparent 0 30%, var(--back-line) 31% 38%, transparent 39%) 0 0 / calc(var(--cw) * 0.26) calc(var(--cw) * 0.26),
+      radial-gradient(circle at 0 0, var(--back-line) 0 12%, transparent 13%) 0 0 / calc(var(--cw) * 0.26) calc(var(--cw) * 0.26),
+      linear-gradient(160deg, var(--back), var(--back-2));
+    border: 1px solid var(--back-edge);
+    box-shadow: inset 0 0 0 calc(var(--cw) * 0.045) #f0e2c0, inset 0 0 0 calc(var(--cw) * 0.06) var(--brass), 0 2px 4px var(--card-shadow);
+  }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .col::before, :root:is([data-skin="walnut"],[data-skin="deco"]) .done .slot, :root:is([data-skin="walnut"],[data-skin="deco"]) .stock .slot { border: 1.5px solid rgba(217,180,100,0.35); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .done .mini { background: linear-gradient(180deg, #faf4e6, #f0e6d0); }
+  :root:is([data-skin="walnut"],[data-skin="deco"]) .card.selected { box-shadow: 0 0 0 2px var(--brass), 0 0 18px rgba(217,180,100,0.55), 0 8px 16px rgba(0,0,0,0.5); }
+  /* ---------- Walnut Deco: same table, engraved Cinzel numerals ---------- */
+  :root[data-skin="deco"] {
+    --ui-font: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+    --display-font: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+    --rank-font: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+    --ui-size: 14.5px;
+  }
+  :root[data-skin="deco"] .brand h1 { font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; font-size: 20px; }
+  :root[data-skin="deco"] .brand .diff, :root[data-skin="deco"] .eyebrow, :root[data-skin="deco"] .skin-label { letter-spacing: 0.22em; }
+  :root[data-skin="deco"] .btn, :root[data-skin="deco"] .skin select, :root[data-skin="deco"] .tool span, :root[data-skin="deco"] .dock-btn { font-family: var(--ui-font); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; }
+  :root[data-skin="deco"] .panel h2 { font-weight: 700; letter-spacing: 0.04em; }
+  :root[data-skin="deco"] .stats b, :root[data-skin="deco"] .dock-mid b, :root[data-skin="deco"] .win-stats b { font-family: var(--display-font); font-weight: 700; }
+  :root[data-skin="deco"] .card .corner { font-weight: 700; letter-spacing: 0; }
+  :root[data-skin="deco"] .cell { font-weight: 700; }
+  :root[data-skin="deco"] .key { font-weight: 700; }
+  /* ---------- Aurora: midnight sky, drifting northern lights, glass cards ---------- */
+  :root[data-skin="aurora"] {
+    --felt: #0b1230;
+    --felt-deep: #050817;
+    --felt-line: rgba(140, 200, 255, 0.28);
+    --felt-ink: #eef4ff;
+    --felt-ink-dim: rgba(238, 244, 255, 0.66);
+    --card: rgba(16, 24, 56, 0.82);
+    --card-edge: rgba(150, 210, 255, 0.45);
+    --card-shadow: rgba(0, 0, 0, 0.6);
+    --back: #16204a;
+    --back-2: #0a0f2a;
+    --back-line: rgba(110, 231, 255, 0.35);
+    --back-edge: rgba(110, 231, 255, 0.6);
+    --red: #ff5c8a;
+    --black: #7fe9ff;
+    --brass: #ffb547;
+    --brass-hover: #ffc86b;
+    --brass-soft: rgba(255, 181, 71, 0.4);
+    --on-brass: #1a0f00;
+    --red-soft: #ff7aa2;
+    --mint: #8dfcc8;
+    --mint-soft: rgba(141, 252, 200, 0.35);
+    --ui-font: "Exo 2", "Segoe UI", system-ui, sans-serif;
+    --display-font: "Orbitron", "Exo 2", system-ui, sans-serif;
+    --rank-font: "Orbitron", "Exo 2", system-ui, sans-serif;
+    --body-bg: radial-gradient(120% 80% at 50% 100%, #101a4a 0%, #070b22 55%, #03040f 100%);
+    --btn-bg: rgba(120, 170, 255, 0.10);
+    --btn-bg-hover: rgba(120, 170, 255, 0.22);
+    --scrim: rgba(3, 5, 18, 0.72);
+    --toast-bg: rgba(10, 16, 40, 0.92);
+    --toast-ink: #eef4ff;
+    --panel-bg: rgba(10, 16, 44, 0.86);
+    --r-card: calc(var(--cw) * 0.08);
+    --r-btn: 10px;
+    --r-panel: 18px;
+    --ui-size: 14px;
+  }
+  /* sky layers: stars + drifting aurora, fixed behind the app */
+  :root[data-skin="aurora"] body { position: relative; isolation: isolate; }
+  :root[data-skin="aurora"] body::before, :root[data-skin="aurora"] body::after {
+    content: ""; position: fixed; inset: -20%; z-index: -1; pointer-events: none;
+  }
+  :root[data-skin="aurora"] body::before {
+    background:
+      radial-gradient(1px 1px at 12% 18%, #fff 60%, transparent 61%), radial-gradient(1.5px 1.5px at 78% 12%, #fff 60%, transparent 61%),
+      radial-gradient(1px 1px at 40% 40%, #dbe9ff 60%, transparent 61%), radial-gradient(1px 1px at 88% 52%, #fff 60%, transparent 61%),
+      radial-gradient(1.5px 1.5px at 24% 72%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 60% 82%, #dbe9ff 60%, transparent 61%),
+      radial-gradient(1px 1px at 5% 50%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 52% 8%, #fff 60%, transparent 61%),
+      radial-gradient(1.2px 1.2px at 70% 30%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 33% 92%, #fff 60%, transparent 61%),
+      radial-gradient(1px 1px at 93% 88%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 16% 35%, #fff 60%, transparent 61%);
+    background-size: 340px 340px;
+    opacity: 0.8;
+    animation: twinkle 6s ease-in-out infinite alternate;
+  }
+  :root[data-skin="aurora"] body::after {
+    background:
+      radial-gradient(50% 35% at 20% 30%, rgba(60, 230, 200, 0.42), transparent 70%),
+      radial-gradient(45% 30% at 70% 22%, rgba(120, 90, 255, 0.40), transparent 70%),
+      radial-gradient(60% 30% at 55% 60%, rgba(255, 80, 160, 0.22), transparent 70%),
+      radial-gradient(40% 25% at 85% 70%, rgba(80, 200, 255, 0.30), transparent 70%);
+    filter: blur(28px);
+    animation: aurora 26s ease-in-out infinite alternate;
+  }
+  @keyframes aurora {
+    0% { transform: translate3d(-4%, -2%, 0) scale(1) rotate(-2deg); }
+    50% { transform: translate3d(3%, 3%, 0) scale(1.08) rotate(1deg); }
+    100% { transform: translate3d(5%, -3%, 0) scale(1.02) rotate(3deg); }
+  }
+  @keyframes twinkle { from { opacity: 0.55; } to { opacity: 0.95; } }
+  :root[data-skin="aurora"] .btn, :root[data-skin="aurora"] .skin select, :root[data-skin="aurora"] .choice, :root[data-skin="aurora"] .key, :root[data-skin="aurora"] .tool, :root[data-skin="aurora"] .dock-btn {
+    border: 1px solid rgba(150, 210, 255, 0.35);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 0 1px rgba(0,0,0,0.3), 0 6px 18px rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  :root[data-skin="aurora"] .btn.primary { background: linear-gradient(135deg, #7fe9ff, #b48cff 60%, #ff5c8a); color: #0a0f2a; border-color: transparent; font-weight: 700; }
+  :root[data-skin="aurora"] .brand h1 { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 19px; background: linear-gradient(90deg, #7fe9ff, #b48cff, #ff5c8a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  :root[data-skin="aurora"] .brand .diff, :root[data-skin="aurora"] .eyebrow { color: var(--mint); letter-spacing: 0.2em; }
+  :root[data-skin="aurora"] .stats b { color: #fff; text-shadow: 0 0 10px rgba(127,233,255,0.8); }
+  :root[data-skin="aurora"] .panel { border: 1px solid rgba(150,210,255,0.35); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(120,90,255,0.25); }
+  :root[data-skin="aurora"] .panel h2 { background: linear-gradient(90deg, #7fe9ff, #b48cff, #ff5c8a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  :root[data-skin="aurora"] .choice:hover { border-color: var(--mint); box-shadow: 0 0 18px rgba(141,252,200,0.35); }
+  :root[data-skin="aurora"] .stats-table td, :root[data-skin="aurora"] .stats-table th { border-color: rgba(150,210,255,0.2); }
+  :root[data-skin="aurora"] .dock-mid b { background: linear-gradient(90deg, #7fe9ff, #ff5c8a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  /* spider cards: dark glass, glowing pips */
+  :root[data-skin="aurora"] .card.up {
+    background: linear-gradient(160deg, rgba(30, 42, 90, 0.92), rgba(12, 18, 46, 0.92));
+    border: 1px solid var(--card-edge);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 4px 12px rgba(0,0,0,0.5);
+    color: #eef4ff;
+  }
+  :root[data-skin="aurora"] .card.up .corner, :root[data-skin="aurora"] .card.up .pip { color: var(--black); text-shadow: 0 0 8px rgba(127,233,255,0.7); }
+  :root[data-skin="aurora"] .card.up.red .corner, :root[data-skin="aurora"] .card.up.red .pip { color: var(--red); text-shadow: 0 0 8px rgba(255,92,138,0.75); }
+  :root[data-skin="aurora"] .card.down, :root[data-skin="aurora"] .stock .stack .back {
+    background:
+      linear-gradient(60deg, transparent 0 46%, var(--back-line) 46% 54%, transparent 54%) 0 0 / calc(var(--cw) * 0.3) calc(var(--cw) * 0.3),
+      linear-gradient(-60deg, transparent 0 46%, var(--back-line) 46% 54%, transparent 54%) 0 0 / calc(var(--cw) * 0.3) calc(var(--cw) * 0.3),
+      linear-gradient(160deg, var(--back), var(--back-2));
+    border: 1px solid var(--back-edge);
+    box-shadow: inset 0 0 0 2px rgba(5,8,23,0.9), inset 0 0 0 3px rgba(127,233,255,0.35), 0 0 12px rgba(127,233,255,0.25), 0 2px 4px var(--card-shadow);
+  }
+  :root[data-skin="aurora"] .card.selected { box-shadow: 0 0 0 2px var(--brass), 0 0 24px rgba(255,181,71,0.7), 0 10px 20px rgba(0,0,0,0.6); }
+  :root[data-skin="aurora"] .col::before, :root[data-skin="aurora"] .done .slot, :root[data-skin="aurora"] .stock .slot { border: 1px solid rgba(150,210,255,0.3); box-shadow: inset 0 0 14px rgba(127,233,255,0.12); }
+  :root[data-skin="aurora"] .done .mini { background: linear-gradient(160deg, rgba(30,42,90,0.95), rgba(12,18,46,0.95)); border-color: var(--card-edge); text-shadow: 0 0 8px rgba(255,255,255,0.6); }
+  :root[data-skin="aurora"] .done .slot.landed::after { border-color: var(--mint); box-shadow: 0 0 20px rgba(141,252,200,0.8); }
+  @media (prefers-reduced-motion: reduce) {
+    :root[data-skin="aurora"] body::before, :root[data-skin="aurora"] body::after { animation: none; }
+  }
   /* ---------- theme picker ---------- */
   .skin { display: flex; align-items: center; gap: 6px; }
   .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
@@ -673,6 +869,9 @@
     noir: 'Éditorial noir',
     ips: 'iPS',
     classic: 'Classic',
+    walnut: 'Walnut',
+    deco: 'Walnut Deco',
+    aurora: 'Aurora',
   };
 
   // Unbiased integer in [0, n) from the browser's cryptographic RNG (rejection sampling
