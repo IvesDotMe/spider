@@ -1,0 +1,16 @@
+{
+  "name": "Spider Solitaire",
+  "short_name": "Spider",
+  "description": "Spider Solitaire with one, two or four suits. Works offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#10312a",
+  "theme_color": "#1a4536",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

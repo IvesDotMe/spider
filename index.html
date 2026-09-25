@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="description" content="Spider Solitaire — one, two or four suits. Works offline.">
+<meta name="theme-color" content="#1a4536">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Spider">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Spider Solitaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --felt: #1a4536;
+    --felt-deep: #10312a;
+    --felt-line: rgba(255, 255, 255, 0.10);
+    --felt-ink: #e9efe7;
+    --felt-ink-dim: rgba(233, 239, 231, 0.62);
+    --card: #f8f3e7;
+    --card-edge: #cfc5ad;
+    --card-shadow: rgba(0, 0, 0, 0.35);
+    --back: #7c2d2d;
+    --back-2: #5b1f1f;
+    --back-line: rgba(255, 233, 200, 0.28);
+    --red: #b3322e;
+    --black: #22262b;
+    --brass: #d8a94a;
+    --brass-soft: rgba(216, 169, 74, 0.35);
+    --mint: #7fd8c6;
+    --mint-soft: rgba(127, 216, 198, 0.30);
+    --ui-font: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+    --display-font: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --brass-hover: #e6b85a;
+    --on-brass: #2a1e08;
+    --red-soft: #e0605c;
+    --back-edge: #3f1515;
+    --body-bg: radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
+    --btn-bg: rgba(255, 255, 255, 0.06);
+    --btn-bg-hover: rgba(255, 255, 255, 0.12);
+    --scrim: rgba(8, 24, 19, 0.72);
+    --toast-bg: rgba(12, 30, 25, 0.92);
+    --toast-ink: #e9efe7;
+    --panel-bg: var(--felt-deep);
+    --r-card: calc(var(--cw) * 0.08);
+    --r-btn: 6px;
+    --r-panel: 12px;
+    --ui-size: 14px;
+    --cw: 72px;
+    --ch: calc(var(--cw) * 1.42);
+    --gap: 10px;
+    --gutter: 16px;
+    color-scheme: dark;
+  }
+  /* ---------- Éditorial (paper): L'IMPACT magazine tokens ---------- */
+  :root[data-skin="paper"] {
+    --felt: #faf7f1;
+    --felt-deep: #f4efe6;
+    --felt-line: #e3dccb;
+    --felt-ink: #211d17;
+    --felt-ink-dim: #6f675a;
+    --card: #fffdf8;
+    --card-edge: #d9d0bc;
+    --card-shadow: rgba(60, 50, 30, 0.18);
+    --back: #f1e9d8;
+    --back-2: #e4dac5;
+    --back-line: rgba(138, 109, 63, 0.38);
+    --back-edge: #b89a67;
+    --red: #8f2f2a;
+    --black: #211d17;
+    --brass: #8a6d3f;
+    --brass-hover: #6e572f;
+    --brass-soft: rgba(138, 109, 63, 0.22);
+    --on-brass: #fffdf8;
+    --red-soft: #8f2f2a;
+    --mint: #4f7a6f;
+    --mint-soft: rgba(79, 122, 111, 0.22);
+    --ui-font: "Cormorant Garamond", Garamond, Georgia, serif;
+    --display-font: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
+    --body-bg: var(--felt);
+    --btn-bg: transparent;
+    --btn-bg-hover: var(--brass-soft);
+    --scrim: rgba(33, 29, 23, 0.55);
+    --toast-bg: #211d17;
+    --toast-ink: #faf7f1;
+    --panel-bg: #fffdf8;
+    --r-card: 0px;
+    --r-btn: 0px;
+    --r-panel: 0px;
+    --ui-size: 15px;
+    color-scheme: light;
+  }
+  /* ---------- Éditorial noir ---------- */
+  :root[data-skin="noir"] {
+    --felt: #1f1b15;
+    --felt-deep: #100e0b;
+    --felt-line: #332c20;
+    --felt-ink: #ece4d4;
+    --felt-ink-dim: #a3987f;
+    --card: #1c1812;
+    --card-edge: #3d3427;
+    --card-shadow: rgba(0, 0, 0, 0.6);
+    --back: #26211a;
+    --back-2: #1a1611;
+    --back-line: rgba(201, 163, 94, 0.32);
+    --back-edge: #4a3f2c;
+    --red: #d9927c;
+    --black: #ece4d4;
+    --brass: #c9a35e;
+    --brass-hover: #ddb977;
+    --brass-soft: rgba(201, 163, 94, 0.25);
+    --on-brass: #161310;
+    --red-soft: #d9927c;
+    --mint: #ece4d4;
+    --mint-soft: rgba(236, 228, 212, 0.22);
+    --ui-font: "Cormorant Garamond", Garamond, Georgia, serif;
+    --display-font: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
+    --body-bg: radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
+    --btn-bg: transparent;
+    --btn-bg-hover: var(--brass-soft);
+    --scrim: rgba(0, 0, 0, 0.7);
+    --toast-bg: #1c1812;
+    --toast-ink: #ece4d4;
+    --panel-bg: #161310;
+    --r-card: 0px;
+    --r-btn: 0px;
+    --r-panel: 0px;
+    --ui-size: 15px;
+  }
+  /* ---------- iPS: zinc chrome, #0072c6 accent ---------- */
+  :root[data-skin="ips"] {
+    --felt: #27272a;
+    --felt-deep: #18181b;
+    --felt-line: #3f3f46;
+    --felt-ink: #fafafa;
+    --felt-ink-dim: #a1a1aa;
+    --card: #fafafa;
+    --card-edge: #d4d4d8;
+    --card-shadow: rgba(0, 0, 0, 0.5);
+    --back: #0072c6;
+    --back-2: #00589a;
+    --back-line: rgba(255, 255, 255, 0.22);
+    --back-edge: #004f8a;
+    --red: #dc2626;
+    --black: #18181b;
+    --brass: #0072c6;
+    --brass-hover: #1a86d9;
+    --brass-soft: rgba(0, 114, 198, 0.35);
+    --on-brass: #ffffff;
+    --red-soft: #f87171;
+    --mint: #3a97e8;
+    --mint-soft: rgba(58, 151, 232, 0.28);
+    --ui-font: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --display-font: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
+    --body-bg: var(--felt-deep);
+    --btn-bg: #27272a;
+    --btn-bg-hover: #3f3f46;
+    --scrim: rgba(0, 0, 0, 0.6);
+    --toast-bg: #27272a;
+    --toast-ink: #fafafa;
+    --panel-bg: #27272a;
+    --r-card: calc(var(--cw) * 0.08);
+    --r-btn: 6px;
+    --r-panel: 12px;
+    --ui-size: 14px;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--body-bg);
+    color: var(--felt-ink);
+    font-family: var(--ui-font);
+    font-size: var(--ui-size);
+    transition: background 300ms ease, color 300ms ease;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    overscroll-behavior: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: none;
+  }
+  #root { height: 100%; }
+  .app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-block: max(10px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-bottom, 0px));
+    padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    gap: 10px;
+  }
+  /* ---------- top bar ---------- */
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    font-variation-settings: "opsz" 144;
+    color: var(--felt-ink);
+  }
+  .brand .diff {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--brass);
+    font-weight: 700;
+  }
+  .stats {
+    display: flex;
+    gap: 16px;
+    font-variant-numeric: tabular-nums;
+    color: var(--felt-ink-dim);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stats b { color: var(--felt-ink); font-weight: 700; margin-left: 5px; letter-spacing: 0; font-size: 13px; }
+  .controls { display: flex; gap: 6px; flex-wrap: wrap; }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--felt-line);
+    background: var(--btn-bg);
+    color: var(--felt-ink);
+    font: 600 13px var(--ui-font);
+    padding: 7px 12px;
+    border-radius: var(--r-btn);
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .btn:hover { background: var(--btn-bg-hover); }
+  .btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .btn.primary { background: var(--brass); border-color: var(--brass); color: var(--on-brass); }
+  .btn.primary:hover { background: var(--brass-hover); border-color: var(--brass-hover); }
+  /* ---------- piles row ---------- */
+  .piles {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    height: calc(var(--ch) * 0.62 + 8px);
+  }
+  .done {
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+  }
+  .done .slot, .stock .slot {
+    width: calc(var(--cw) * 0.62);
+    height: calc(var(--ch) * 0.62);
+    border-radius: calc(var(--r-card) * 0.75);
+    border: 1.5px dashed var(--felt-line);
+    box-sizing: border-box;
+    position: relative;
+  }
+  .done .mini {
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: var(--card);
+    border: 1px solid var(--card-edge);
+    display: grid; place-items: center;
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: calc(var(--cw) * 0.26);
+    box-shadow: 0 1px 3px var(--card-shadow);
+  }
+  .stock { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+  .stock .label {
+    text-align: right;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--felt-ink-dim);
+    padding-top: 6px;
+    line-height: 1.45;
+  }
+  .stock .label b { display: block; color: var(--felt-ink); font-size: 16px; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+  .stock .stack { position: relative; width: calc(var(--cw) * 0.62 + 5 * 3px); height: calc(var(--ch) * 0.62); }
+  .stock .stack .back {
+    position: absolute; top: 0;
+    width: calc(var(--cw) * 0.62); height: calc(var(--ch) * 0.62);
+    border-radius: calc(var(--r-card) * 0.75);
+  }
+  .stock:focus-visible .stack { outline: 2px solid var(--brass); outline-offset: 3px; border-radius: 6px; }
+  /* ---------- tableau ---------- */
+  .tableau {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(10, var(--cw));
+    gap: var(--gap);
+    justify-content: center;
+    position: relative;
+  }
+  .col {
+    position: relative;
+    min-height: var(--ch);
+    border-radius: var(--r-card);
+  }
+  .col::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: var(--ch);
+    border-radius: var(--r-card);
+    border: 1.5px dashed var(--felt-line);
+    box-sizing: border-box;
+  }
+  .col.target::before { border-color: var(--mint); box-shadow: 0 0 0 3px var(--mint-soft); }
+  .col.hint-target::before { border-color: var(--mint); }
+  /* ---------- card ---------- */
+  .card {
+    position: absolute;
+    left: 0;
+    width: var(--cw);
+    height: var(--ch);
+    border-radius: var(--r-card);
+    box-sizing: border-box;
+    transition: top 160ms ease, box-shadow 120ms ease, transform 120ms ease;
+    will-change: top;
+  }
+  .card.up {
+    background: var(--card);
+    border: 1px solid var(--card-edge);
+    box-shadow: 0 1px 2px var(--card-shadow);
+    cursor: grab;
+    color: var(--black);
+  }
+  .card.up.red { color: var(--red); }
+  .card.up.locked { cursor: default; }
+  .card.down {
+    background:
+      repeating-linear-gradient(45deg, transparent 0 4px, var(--back-line) 4px 5px),
+      repeating-linear-gradient(-45deg, transparent 0 4px, var(--back-line) 4px 5px),
+      linear-gradient(160deg, var(--back), var(--back-2));
+    border: 1px solid var(--back-edge);
+    box-shadow: inset 0 0 0 3px var(--card), 0 1px 2px var(--card-shadow);
+  }
+  .card .corner {
+    position: absolute;
+    top: calc(var(--cw) * 0.05);
+    left: calc(var(--cw) * 0.08);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--cw) * 0.03);
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: max(10.5px, calc(var(--cw) * 0.27));
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .card .corner .s { font-family: var(--ui-font); font-size: max(9.5px, calc(var(--cw) * 0.24)); }
+  .card .pip {
+    position: absolute;
+    right: calc(var(--cw) * 0.08);
+    bottom: calc(var(--cw) * 0.04);
+    font-size: calc(var(--cw) * 0.5);
+    line-height: 1;
+    opacity: 0.9;
+  }
+  .card.selected { box-shadow: 0 0 0 2px var(--brass), 0 6px 14px rgba(0,0,0,0.35); transform: translateY(-3px); }
+  .card.hint { box-shadow: 0 0 0 2px var(--mint), 0 6px 14px rgba(0,0,0,0.35); }
+  .card.ghost { visibility: hidden; }
+  .card.complete { animation: lift 380ms ease forwards; }
+  @keyframes lift {
+    to { transform: translateY(-30px) scale(0.92); opacity: 0; }
+  }
+  .drag-layer {
+    position: fixed;
+    left: 0; top: 0;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .drag-layer .card { transition: none; box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed;
+    left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    background: var(--toast-bg);
+    border: 1px solid var(--felt-line);
+    color: var(--toast-ink);
+    padding: 9px 14px;
+    border-radius: var(--r-btn);
+    font-size: 13px;
+    z-index: 60;
+    animation: toastin 200ms ease;
+    max-width: calc(100vw - 32px);
+    text-align: center;
+  }
+  @keyframes toastin { from { opacity: 0; transform: translate(-50%, 6px); } }
+  /* ---------- overlays ---------- */
+  .overlay {
+    position: fixed; inset: 0;
+    background: var(--scrim);
+    display: flex; align-items: flex-start; justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    z-index: 70;
+    padding: max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+  }
+  .panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--felt-line);
+    border-radius: var(--r-panel);
+    padding: 28px 28px 24px;
+    width: min(440px, 100%);
+    box-sizing: border-box;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    text-align: center;
+    margin: auto;
+  }
+  .panel h2 {
+    margin: 0 0 6px;
+    font-family: var(--display-font);
+    font-weight: 700;
+    font-size: 30px;
+    text-wrap: balance;
+    font-variation-settings: "opsz" 144;
+  }
+  .panel p { margin: 0 0 20px; color: var(--felt-ink-dim); line-height: 1.5; }
+  .panel .eyebrow {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--brass); font-weight: 700; margin-bottom: 8px;
+  }
+  .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .choice {
+    appearance: none;
+    background: var(--btn-bg);
+    border: 1px solid var(--felt-line);
+    color: var(--felt-ink);
+    border-radius: var(--r-panel);
+    padding: 14px 8px 12px;
+    cursor: pointer;
+    font-family: var(--ui-font);
+    transition: background 120ms ease, border-color 120ms ease;
+  }
+  .choice:hover { background: var(--btn-bg-hover); border-color: var(--brass); }
+  .choice:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .choice .suits { font-size: 24px; line-height: 1; margin-bottom: 8px; letter-spacing: 2px; }
+  .choice .suits .r { color: var(--red-soft); }
+  .choice .name { font-weight: 700; font-size: 14px; }
+  .choice .sub { font-size: 11px; color: var(--felt-ink-dim); margin-top: 2px; }
+  .panel .row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .panel .win-stats {
+    display: flex; justify-content: center; gap: 24px; margin: 8px 0 20px;
+    font-variant-numeric: tabular-nums;
+  }
+  .panel .win-stats div { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); }
+  .panel .win-stats b { display: block; font-size: 22px; color: var(--felt-ink); letter-spacing: 0; font-family: var(--display-font); }
+  .fine { font-size: 12px; color: var(--felt-ink-dim); margin-top: 16px; line-height: 1.5; }
+  .win-note { font-size: 13px; margin-top: -8px; }
+  .win-stats .best b { color: var(--brass); }
+  .win-stats .best::after { content: "best"; display: block; font-size: 9px; letter-spacing: 0.16em; color: var(--brass); margin-top: 2px; }
+  .stats-block { margin-top: 18px; border-top: 1px solid var(--felt-line); padding-top: 14px; text-align: left; }
+  .stats-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .stats-head .eyebrow { margin: 0; }
+  .streak { font-size: 11px; color: var(--felt-ink-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+  .stats-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-variant-numeric: tabular-nums; font-size: 13px; }
+  .stats-table th { padding-left: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--felt-ink-dim); font-weight: 600; text-align: right; padding: 0 0 6px; }
+  .stats-table td { text-align: right; padding: 5px 0 5px 10px; border-top: 1px solid var(--felt-line); color: var(--felt-ink); white-space: nowrap; }
+  .stats-table th:first-child, .stats-table td.lbl { text-align: left; }
+  .stats-table .rate { color: var(--felt-ink-dim); font-size: 11px; }
+  .linkish { appearance: none; background: none; border: 0; padding: 8px 0 0; color: var(--felt-ink-dim); font: 600 11px var(--ui-font); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+  .linkish:hover { color: var(--brass); }
+  .linkish:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  /* ---------- theme picker ---------- */
+  .skin { display: flex; align-items: center; gap: 6px; }
+  .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
+  .skin select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--btn-bg);
+    color: var(--felt-ink);
+    border: 1px solid var(--felt-line);
+    border-radius: var(--r-btn);
+    font: 600 13px var(--ui-font);
+    padding: 7px 26px 7px 10px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+  }
+  .skin select:hover { background-color: var(--btn-bg-hover); }
+  .skin select:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .menu-skin { margin-top: 14px; display: flex; justify-content: center; }
+  /* ---------- completed-run celebration ---------- */
+  .celebrate { position: fixed; inset: 0; pointer-events: none; z-index: 65; }
+  .celebrate .card { transition: none; box-shadow: 0 10px 24px rgba(0,0,0,0.45); }
+  .done .slot.landed { animation: land 700ms ease-out; }
+  .done .slot.landed::after {
+    content: "";
+    position: absolute; inset: -3px;
+    border-radius: inherit;
+    border: 2px solid var(--brass);
+    animation: ring 700ms ease-out forwards;
+  }
+  @keyframes land {
+    0% { box-shadow: 0 0 0 0 var(--brass-soft); }
+    40% { box-shadow: 0 0 0 8px var(--brass-soft); }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @keyframes ring { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(1.7); } }
+  /* Éditorial: hairline rules and tracked serif UI */
+  :root[data-skin="paper"] .stats, :root[data-skin="noir"] .stats,
+  :root[data-skin="paper"] .stock .label, :root[data-skin="noir"] .stock .label { font-family: "Poppins", var(--ui-font); font-size: 10.5px; letter-spacing: 0.16em; }
+  :root[data-skin="paper"] .btn, :root[data-skin="noir"] .btn,
+  :root[data-skin="paper"] .skin select, :root[data-skin="noir"] .skin select { font-family: "Poppins", var(--ui-font); font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; }
+  :root[data-skin="paper"] .brand h1, :root[data-skin="noir"] .brand h1 { font-weight: 500; font-style: italic; letter-spacing: 0; }
+  :root[data-skin="paper"] .panel h2, :root[data-skin="noir"] .panel h2 { font-weight: 500; }
+  :root[data-skin="paper"] .panel p, :root[data-skin="noir"] .panel p { font-size: 17px; }
+  :root[data-skin="paper"] .card .corner .s, :root[data-skin="noir"] .card .corner .s { font-family: system-ui, sans-serif; }
+  :root[data-skin="paper"] .card.up { box-shadow: 0 1px 0 var(--card-edge), 0 1px 2px var(--card-shadow); }
+  :root[data-skin="noir"] .card.up { border-color: var(--card-edge); box-shadow: 0 0 0 1px rgba(201,163,94,0.12), 0 1px 3px var(--card-shadow); }
+  /* iPS: geometric ranks, dot-style stats */
+  :root[data-skin="ips"] .card .corner { font-weight: 600; letter-spacing: 0; }
+  :root[data-skin="ips"] .brand h1 { font-weight: 600; letter-spacing: -0.01em; }
+  :root[data-skin="ips"] .stats span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--brass); margin-right: 7px; vertical-align: 1px; }
+  @media (max-width: 620px) {
+    .brand h1 { font-size: 18px; }
+    .stats { gap: 10px; font-size: 11px; }
+    .stats .score { display: none; }
+    .btn { padding: 6px 9px; font-size: 12px; }
+    .stock .label { display: none; }
+    .skin-label { display: none; }
+    :root { --gutter: 8px; }
+    .app { gap: 6px; }
+    .bar { gap: 6px 10px; }
+    .card .corner { top: calc(var(--cw) * 0.06); left: calc(var(--cw) * 0.07); gap: 1px; }
+    .card .pip { font-size: calc(var(--cw) * 0.44); }
+    .choices { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .choice { padding: 10px 4px 9px; }
+    .choice .suits { font-size: 18px; letter-spacing: 1px; }
+    .choice .name { font-size: 12px; }
+    .panel { padding: 22px 16px 18px; }
+    .panel h2 { font-size: 26px; }
+    .panel p { font-size: 13px; }
+    .stats-table { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card, .btn, .choice { transition: none; }
+    .card.complete, .toast { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+<script>
+(function () {
+  const { useState, useEffect, useRef, useMemo, useCallback } = React;
+  const h = React.createElement;
+
+  // ---------------------------------------------------------------- rules
+  const SUITS = ['♠', '♥', '♦', '♣'];
+  const RED = [false, true, true, false];
+  const RANKS = ['', 'A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  const DIFFICULTY = { 1: 'One suit', 2: 'Two suits', 4: 'Four suits' };
+  const SAVE_KEY = 'spider-solitaire-save-v1';
+  const SKIN_KEY = 'spider-solitaire-skin';
+  const SKINS = {
+    felt: 'Felt',
+    paper: 'Éditorial',
+    noir: 'Éditorial noir',
+    ips: 'iPS',
+  };
+
+  // Unbiased integer in [0, n) from the browser's cryptographic RNG (rejection sampling
+  // avoids the modulo bias); falls back to Math.random only where crypto is unavailable.
+  function randInt(n) {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const buf = new Uint32Array(1);
+      const limit = Math.floor(0x100000000 / n) * n;
+      let x;
+      do { window.crypto.getRandomValues(buf); x = buf[0]; } while (x >= limit);
+      return x % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+
+  // Fisher–Yates: every one of the 104! orderings is equally likely.
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = randInt(i + 1);
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildDeck(nSuits) {
+    // 104 cards. Suit indices used: 1 → spades; 2 → spades, hearts; 4 → all.
+    const suitSet = nSuits === 1 ? [0] : nSuits === 2 ? [0, 1] : [0, 1, 2, 3];
+    const copies = 8 / suitSet.length;
+    const deck = [];
+    let id = 0;
+    for (const s of suitSet) {
+      for (let c = 0; c < copies; c++) {
+        for (let r = 1; r <= 13; r++) deck.push({ id: id++, rank: r, suit: s, up: false });
+      }
+    }
+    return shuffle(deck);
+  }
+
+  function newGame(nSuits) {
+    const deck = buildDeck(nSuits);
+    const cols = Array.from({ length: 10 }, () => []);
+    let k = 0;
+    for (let c = 0; c < 10; c++) {
+      const n = c < 4 ? 6 : 5;
+      for (let i = 0; i < n; i++) cols[c].push(deck[k++]);
+      cols[c][cols[c].length - 1].up = true;
+    }
+    const stock = [];
+    while (k < deck.length) stock.push(deck.slice(k, (k += 10)));
+    return {
+      suits: nSuits, cols, stock, done: [], moves: 0, score: 500,
+      elapsed: 0, started: false, won: false,
+    };
+  }
+
+  // Index from which the top run of column `col` can be picked up as one unit.
+  function runStart(col) {
+    if (!col.length) return -1;
+    let i = col.length - 1;
+    if (!col[i].up) return -1;
+    while (i > 0 && col[i - 1].up && col[i - 1].suit === col[i].suit && col[i - 1].rank === col[i].rank + 1) i--;
+    return i;
+  }
+  const canPick = (col, idx) => idx >= 0 && idx >= runStart(col);
+  function canDrop(dest, card) {
+    if (!dest.length) return true;
+    return dest[dest.length - 1].rank === card.rank + 1;
+  }
+
+  function cloneGame(g) {
+    return {
+      ...g,
+      cols: g.cols.map(c => c.map(x => ({ ...x }))),
+      stock: g.stock.map(d => d.map(x => ({ ...x }))),
+      done: g.done.slice(),
+    };
+  }
+
+  // Does column c end in a complete K→A same-suit run?
+  function hasCompleteRun(col) {
+    if (col.length < 13) return false;
+    const top = col.slice(-13);
+    if (top[0].rank !== 13 || !top[0].up) return false;
+    for (let i = 0; i < 13; i++) {
+      if (!top[i].up || top[i].suit !== top[0].suit || top[i].rank !== 13 - i) return false;
+    }
+    return true;
+  }
+  const completedColumns = (g) => g.cols.map((col, c) => (hasCompleteRun(col) ? c : -1)).filter(c => c >= 0);
+
+  // Clear every completed run. Returns the new state plus the runs that left the table,
+  // each with the foundation slot it goes to — the celebration animation needs both.
+  function sweepAll(g0) {
+    const g = cloneGame(g0);
+    const runs = [];
+    for (let c = 0; c < 10; c++) {
+      if (!hasCompleteRun(g.cols[c])) continue;
+      const cards = g.cols[c].slice(-13);
+      g.cols[c] = g.cols[c].slice(0, -13);
+      runs.push({ cards, slot: g.done.length, col: c });
+      g.done.push(cards[0].suit);
+      g.score += 100;
+      if (g.cols[c].length && !g.cols[c][g.cols[c].length - 1].up) g.cols[c][g.cols[c].length - 1].up = true;
+    }
+    if (g.done.length === 8) g.won = true;
+    return { g, runs };
+  }
+
+  // Moves and deals leave completed runs on the table; the UI sweeps them after the cards land.
+  function applyMove(g0, from, idx, to) {
+    const g = cloneGame(g0);
+    const moving = g.cols[from].slice(idx);
+    g.cols[from] = g.cols[from].slice(0, idx);
+    g.cols[to] = g.cols[to].concat(moving);
+    const src = g.cols[from];
+    if (src.length && !src[src.length - 1].up) src[src.length - 1].up = true;
+    g.moves += 1;
+    g.score -= 1;
+    g.started = true;
+    return g;
+  }
+
+  function applyDeal(g0) {
+    const g = cloneGame(g0);
+    const deal = g.stock.pop();
+    for (let c = 0; c < 10; c++) g.cols[c].push({ ...deal[c], up: true });
+    g.moves += 1;
+    g.started = true;
+    return g;
+  }
+
+  // Best-first list of legal moves, used by hint and double-click.
+  function findMoves(g, onlyFrom) {
+    const out = [];
+    for (let c = 0; c < 10; c++) {
+      if (onlyFrom != null && c !== onlyFrom) continue;
+      const col = g.cols[c];
+      const start = runStart(col);
+      if (start < 0) continue;
+      for (let i = start; i < col.length; i++) {
+        const card = col[i];
+        for (let t = 0; t < 10; t++) {
+          if (t === c) continue;
+          const dest = g.cols[t];
+          if (!canDrop(dest, card)) continue;
+          let score;
+          if (!dest.length) {
+            if (i === 0) continue;                 // whole column to empty column: pointless
+            score = 1 + (col[i - 1].up ? 0 : 2);   // uncovering a face-down card is worth it
+          } else {
+            const top = dest[dest.length - 1];
+            const sameSuit = top.suit === card.suit;
+            const breaksRun = i > 0 && col[i - 1].up && col[i - 1].rank === card.rank + 1 && col[i - 1].suit === card.suit;
+            if (breaksRun && !sameSuit) continue; // never split a good run onto a worse spot
+            score = sameSuit ? 10 : 4;
+            if (i > 0 && !col[i - 1].up) score += 3;
+            if (i > 0 && col[i - 1].up && col[i - 1].rank === card.rank + 1 && col[i - 1].suit !== card.suit) score += 2;
+            score += (col.length - i) * 0.1;       // prefer longer runs
+          }
+          out.push({ from: c, idx: i, to: t, score });
+        }
+      }
+    }
+    out.sort((a, b) => b.score - a.score);
+    return out;
+  }
+
+  // ---------------------------------------------------------------- persistence
+  function load() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) return null;
+      const s = JSON.parse(raw);
+      if (!s || !s.game || !Array.isArray(s.game.cols)) return null;
+      return s;
+    } catch (e) { return null; }
+  }
+  function save(state) {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+  }
+
+  function fmtTime(s) {
+    const m = Math.floor(s / 60), r = s % 60;
+    return `${m}:${r < 10 ? '0' : ''}${r}`;
+  }
+
+  // ---------------------------------------------------------------- stats
+  const STATS_KEY = 'spider-solitaire-stats-v1';
+  const emptyStats = () => ({ streak: 0, bestStreak: 0, by: { 1: { played: 0, won: 0 }, 2: { played: 0, won: 0 }, 4: { played: 0, won: 0 } } });
+  function loadStats() {
+    try {
+      const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null');
+      if (!s || !s.by) return emptyStats();
+      const base = emptyStats();
+      return { ...base, ...s, by: { ...base.by, ...s.by } };
+    } catch (e) { return emptyStats(); }
+  }
+  function saveStats(st) { try { localStorage.setItem(STATS_KEY, JSON.stringify(st)); } catch (e) {} }
+  // A game counts once it ends: won, or abandoned after at least one move.
+  function recordWin(st, g) {
+    const d = { ...st.by[g.suits] };
+    d.played += 1; d.won += 1;
+    const records = [];
+    if (d.bestScore == null || g.score > d.bestScore) { d.bestScore = g.score; records.push('score'); }
+    if (d.bestTime == null || g.elapsed < d.bestTime) { d.bestTime = g.elapsed; records.push('time'); }
+    if (d.fewestMoves == null || g.moves < d.fewestMoves) { d.fewestMoves = g.moves; records.push('moves'); }
+    const streak = st.streak + 1;
+    return { stats: { ...st, streak, bestStreak: Math.max(st.bestStreak, streak), by: { ...st.by, [g.suits]: d } }, records };
+  }
+  function recordAbandon(st, g) {
+    const d = { ...st.by[g.suits], played: st.by[g.suits].played + 1 };
+    return { ...st, streak: 0, by: { ...st.by, [g.suits]: d } };
+  }
+  const totalPlayed = (st) => Object.values(st.by).reduce((n, d) => n + d.played, 0);
+
+  function StatsTable({ stats, onReset }) {
+    const [confirm, setConfirm] = useState(false);
+    if (!totalPlayed(stats)) return null;
+    return h('div', { className: 'stats-block' },
+      h('div', { className: 'stats-head' },
+        h('span', { className: 'eyebrow' }, 'Your record'),
+        h('span', { className: 'streak' }, stats.streak > 0 ? `${stats.streak} win streak` : `Best streak ${stats.bestStreak}`),
+      ),
+      h('table', { className: 'stats-table' },
+        h('thead', null, h('tr', null,
+          h('th', null, ''), h('th', null, 'Played'), h('th', null, 'Won'), h('th', null, 'Best score'), h('th', null, 'Best time'), h('th', null, 'Moves'),
+        )),
+        h('tbody', null, [1, 2, 4].map(n => {
+          const d = stats.by[n];
+          if (!d.played) return null;
+          const rate = Math.round((d.won / d.played) * 100);
+          return h('tr', { key: n },
+            h('td', { className: 'lbl' }, DIFFICULTY[n]),
+            h('td', null, d.played),
+            h('td', null, d.won, h('span', { className: 'rate' }, ` ${rate}%`)),
+            h('td', null, d.bestScore != null ? d.bestScore : '—'),
+            h('td', null, d.bestTime != null ? fmtTime(d.bestTime) : '—'),
+            h('td', null, d.fewestMoves != null ? d.fewestMoves : '—'),
+          );
+        })),
+      ),
+      h('button', { className: 'linkish', id: 'reset-stats', onClick: () => { if (confirm) { onReset(); setConfirm(false); } else setConfirm(true); } },
+        confirm ? 'Tap again to erase your record' : 'Reset record'),
+    );
+  }
+
+  // ---------------------------------------------------------------- components
+  function Card({ card, top, className, onPointerDown, style }) {
+    const cls = ['card', card.up ? 'up' : 'down', RED[card.suit] ? 'red' : '', className || ''].join(' ');
+    return h('div', {
+      className: cls,
+      style: { top: top + 'px', ...(style || {}) },
+      onPointerDown,
+      'data-id': card.id,
+    },
+      card.up && h('div', { className: 'corner' }, RANKS[card.rank], h('span', { className: 's' }, SUITS[card.suit])),
+      card.up && h('div', { className: 'pip' }, SUITS[card.suit]),
+    );
+  }
+
+  function Menu({ resume, onStart, onResume, skin, onSkin, stats, onResetStats }) {
+    return h('div', { className: 'overlay' },
+      h('div', { className: 'panel' },
+        h('div', { className: 'eyebrow' }, 'Two decks · 104 cards'),
+        h('h2', null, 'Spider Solitaire'),
+        h('p', null, 'Build eight runs from King down to Ace, each in a single suit. Any card can sit on the next rank up; only same-suit runs move together.'),
+        h('div', { className: 'choices' },
+          [1, 2, 4].map(n => h('button', { key: n, className: 'choice', id: 'start-' + n, onClick: () => onStart(n) },
+            h('div', { className: 'suits' },
+              n === 1 ? '♠' : n === 2 ? ['♠', h('span', { key: 'r', className: 'r' }, '♥')] :
+                ['♠', h('span', { key: 'r1', className: 'r' }, '♥'), h('span', { key: 'r2', className: 'r' }, '♦'), '♣']),
+            h('div', { className: 'name' }, DIFFICULTY[n]),
+            h('div', { className: 'sub' }, n === 1 ? 'Relaxed' : n === 2 ? 'Classic' : 'Expert'),
+          )),
+        ),
+        resume && h('div', { className: 'row' },
+          h('button', { className: 'btn primary', id: 'resume', onClick: onResume },
+            `Resume ${DIFFICULTY[resume.suits].toLowerCase()} · ${resume.moves} moves`),
+        ),
+        h(StatsTable, { stats, onReset: onResetStats }),
+        h('div', { className: 'fine' }, 'Tap a card to send it to its best spot, or drag it where you want. Fill every empty column before dealing from the stock.'),
+        h('div', { className: 'menu-skin' }, h(SkinPicker, { skin, onChange: onSkin, id: 'skin-menu' })),
+      ),
+    );
+  }
+
+  function SkinPicker({ skin, onChange, id }) {
+    return h('label', { className: 'skin' },
+      h('span', { className: 'skin-label' }, 'Theme'),
+      h('select', { id: id || 'skin', value: skin, onChange: (e) => onChange(e.target.value), 'aria-label': 'Theme' },
+        Object.keys(SKINS).map(k => h('option', { key: k, value: k }, SKINS[k])),
+      ),
+    );
+  }
+
+  function Win({ game, onNew, stats, records }) {
+    return h('div', { className: 'overlay' },
+      h('div', { className: 'panel' },
+        h('div', { className: 'eyebrow' }, DIFFICULTY[game.suits]),
+        h('h2', null, 'All eight runs down.'),
+        h('div', { className: 'win-stats' },
+          h('div', { className: records.includes('score') ? 'best' : '' }, h('b', null, game.score), 'Score'),
+          h('div', { className: records.includes('moves') ? 'best' : '' }, h('b', null, game.moves), 'Moves'),
+          h('div', { className: records.includes('time') ? 'best' : '' }, h('b', null, fmtTime(game.elapsed)), 'Time'),
+        ),
+        h('p', { className: 'win-note' },
+          records.length ? `New personal best — ${records.map(r => ({ score: 'score', time: 'time', moves: 'fewest moves' })[r]).join(', ')}. ` : '',
+          stats.streak > 1 ? `${stats.streak} wins in a row.` : `${stats.by[game.suits].won} of ${stats.by[game.suits].played} ${DIFFICULTY[game.suits].toLowerCase()} games won.`),
+        h('div', { className: 'row' },
+          h('button', { className: 'btn primary', onClick: () => onNew(game.suits) }, 'Play again'),
+          h('button', { className: 'btn', onClick: () => onNew(null) }, 'Change difficulty'),
+        ),
+      ),
+    );
+  }
+
+  function App({ boot }) {
+    const [game, setGame] = useState(boot.game || null);
+    const [history, setHistory] = useState(boot.history || []);
+    const [screen, setScreen] = useState(boot.game ? 'play' : 'menu');
+    const [sel, setSel] = useState(null);          // { col, idx }
+    const [hint, setHint] = useState(null);        // { from, idx, to }
+    const [drag, setDrag] = useState(null);        // { col, idx, x, y, ox, oy, w }
+    const [hover, setHover] = useState(null);      // target column under drag
+    const [toast, setToast] = useState(null);
+    const [metrics, setMetrics] = useState({ cw: 72, h: 600 });
+    const [skin, setSkin] = useState(() => { try { return SKINS[localStorage.getItem(SKIN_KEY)] ? localStorage.getItem(SKIN_KEY) : 'felt'; } catch (e) { return 'felt'; } });
+    const [busy, setBusy] = useState(false);          // true while a completed run is being cleared
+    const [celebrate, setCelebrate] = useState(null); // runs flying to the foundation
+    const [pulse, setPulse] = useState(-1);           // slot index that just received a run
+    const [stats, setStats] = useState(loadStats);
+    const [records, setRecords] = useState([]);       // personal bests set by the game just won
+    useEffect(() => saveStats(stats), [stats]);
+    const tableauRef = useRef(null);
+    const pressRef = useRef(null);
+    const lastTapRef = useRef({ id: null, t: 0 });
+    const toastTimer = useRef(null);
+    const sweepTimer = useRef(null);
+
+    // Theme
+    useEffect(() => {
+      document.documentElement.setAttribute('data-skin', skin);
+      try { localStorage.setItem(SKIN_KEY, skin); } catch (e) {}
+    }, [skin]);
+
+    // Persist
+    useEffect(() => {
+      if (game) save({ game, history }); else { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+    }, [game, history]);
+    // A game loaded mid-sweep (saved between landing and clearing) gets swept on boot.
+    useEffect(() => {
+      if (game && !game.won && completedColumns(game).length && !busy) {
+        const { g } = sweepAll(game);
+        setGame(g);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    useEffect(() => {
+      if (window.claude && window.claude.hot && window.claude.hot.snapshot) {
+        window.claude.hot.snapshot(() => ({ game, history }));
+      }
+    }, [game, history]);
+
+    // Timer
+    useEffect(() => {
+      if (!game || !game.started || game.won || screen !== 'play') return;
+      const t = setInterval(() => setGame(g => (g && !g.won ? { ...g, elapsed: g.elapsed + 1 } : g)), 1000);
+      return () => clearInterval(t);
+    }, [game && game.started, game && game.won, screen]);
+
+    // Card size from available width / height
+    useEffect(() => {
+      const el = tableauRef.current;
+      if (!el) return;
+      const measure = () => {
+        const r = el.getBoundingClientRect();
+        const gap = Math.max(3, Math.min(10, r.width * 0.012));
+        const cw = Math.max(30, Math.min(96, Math.floor((r.width - 9 * gap) / 10)));
+        setMetrics({ cw, h: r.height, gap });
+        document.documentElement.style.setProperty('--cw', cw + 'px');
+        document.documentElement.style.setProperty('--gap', gap + 'px');
+      };
+      measure();
+      const ro = new ResizeObserver(measure);
+      ro.observe(el);
+      window.addEventListener('resize', measure);
+      return () => { ro.disconnect(); window.removeEventListener('resize', measure); };
+    }, [screen]);
+
+    const say = useCallback((msg) => {
+      setToast(msg);
+      clearTimeout(toastTimer.current);
+      toastTimer.current = setTimeout(() => setToast(null), 2200);
+    }, []);
+
+    const start = useCallback((n) => {
+      if (game && !game.won && game.moves > 0) setStats(st => recordAbandon(st, game));
+      setRecords([]);
+      setGame(newGame(n)); setHistory([]); setSel(null); setHint(null); setScreen('play');
+    }, [game]);
+
+    const reduced = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Apply a new state. If it leaves a completed run on the table, let the cards land first,
+    // then lift the run off card by card into its foundation slot.
+    const commit = useCallback((g1) => {
+      setHistory(hs => [...hs.slice(-199), game]);
+      setGame(g1);
+      setSel(null); setHint(null);
+      const cols = completedColumns(g1);
+      if (!cols.length) return;
+      setBusy(true);
+      clearTimeout(sweepTimer.current);
+      sweepTimer.current = setTimeout(() => {
+        const { g: g2, runs } = sweepAll(g1);
+        if (!reduced()) {
+          // Snapshot where each card sits right now; they vanish from the tableau on the next render.
+          runs.forEach(run => {
+            run.rects = run.cards.map(card => {
+              const el = document.querySelector(`.tableau .card[data-id="${card.id}"]`);
+              return el ? el.getBoundingClientRect() : null;
+            });
+          });
+          const ok = runs.filter(r => r.rects.every(Boolean));
+          setCelebrate(ok.length ? ok : null);
+        }
+        setGame(g2);
+        if (g2.won) setStats(st => { const r = recordWin(st, g2); setRecords(r.records); return r.stats; });
+        say(runs.length === 1 ? `${SUITS[runs[0].cards[0].suit]} run complete — +100` : `${runs.length} runs complete — +${100 * runs.length}`);
+      }, reduced() ? 0 : 380);
+    }, [game, say]);
+
+    // Celebration: cards start at their old tableau positions and fly, top card first, into the slot.
+    React.useLayoutEffect(() => {
+      if (!celebrate || !celebrate.length) return;
+      const slots = document.querySelectorAll('.done .slot');
+      const layer = document.querySelector('.celebrate');
+      if (!layer) return;
+      let longest = 0;
+      celebrate.forEach((run, r) => {
+        const slot = slots[run.slot];
+        if (!slot) return;
+        const target = slot.getBoundingClientRect();
+        run.cards.forEach((card, i) => {
+          const el = layer.querySelector(`.card[data-id="${card.id}"]`);
+          const from = run.rects[i];
+          if (!el || !from) return;
+          const order = run.cards.length - 1 - i;          // Ace (top of the pile) leaves first
+          const delay = r * 200 + order * 55;
+          const dx = target.left - from.left, dy = target.top - from.top;
+          const scale = target.width / from.width;
+          el.style.transition = `transform 560ms cubic-bezier(.35,.7,.15,1) ${delay}ms, opacity 200ms ease ${delay + 420}ms`;
+          el.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+          el.style.opacity = '0';
+          longest = Math.max(longest, delay + 620);
+        });
+        setTimeout(() => { setPulse(run.slot); }, r * 200 + 12 * 55 + 380);
+      });
+      const t1 = setTimeout(() => setCelebrate(null), longest);
+      const t2 = setTimeout(() => setBusy(false), longest - 200);
+      const t3 = setTimeout(() => setPulse(-1), longest + 700);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    }, [celebrate]);
+    // Reduced motion (no celebration rendered): release the table straight away.
+    useEffect(() => { if (busy && !celebrate && game && !completedColumns(game).length) setBusy(false); }, [busy, celebrate, game]);
+
+    // Record where cards are right now so they can fly to their new place after the state change.
+    const flipRef = useRef(null);
+    const captureFlight = useCallback((cards, fromEl) => {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const list = [];
+      cards.forEach((card, i) => {
+        const el = fromEl ? fromEl(card, i) : document.querySelector(`.tableau .card[data-id="${card.id}"]`);
+        if (el) list.push({ id: card.id, rect: el.getBoundingClientRect() });
+      });
+      flipRef.current = list;
+    }, []);
+
+    const flyingRef = useRef([]);
+    const settle = useCallback(() => {
+      flyingRef.current.forEach(el => { el.style.transition = ''; el.style.zIndex = ''; el.style.transform = ''; el.style.boxShadow = ''; });
+      flyingRef.current = [];
+    }, []);
+
+    React.useLayoutEffect(() => {
+      const list = flipRef.current;
+      flipRef.current = null;
+      if (!list || !list.length) return;
+      settle(); // finish any flight still in progress before starting a new one
+      const nodes = [];
+      list.forEach(({ id, rect }, i) => {
+        const el = document.querySelector(`.tableau .card[data-id="${id}"]`);
+        if (!el) return;
+        const now = el.getBoundingClientRect();
+        const dx = rect.left - now.left, dy = rect.top - now.top;
+        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+        el.style.transition = 'none';
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
+        el.style.zIndex = 40 + i;
+        el.style.boxShadow = '0 10px 24px rgba(0,0,0,0.45)';
+        nodes.push(el);
+      });
+      if (!nodes.length) return;
+      // Force layout so the starting transform is painted, then release into the flight.
+      void document.body.offsetHeight;
+      nodes.forEach((el, i) => {
+        el.style.transition = `transform 300ms cubic-bezier(.2,.8,.2,1) ${i * 12}ms, box-shadow 300ms ease ${i * 12}ms`;
+        el.style.transform = '';
+        el.style.boxShadow = '';
+      });
+      // The timer is deliberately not cancelled by re-renders (the clock ticks every second);
+      // it must always run so no card keeps its in-flight z-index.
+      flyingRef.current = nodes;
+      setTimeout(settle, 340 + nodes.length * 12);
+    }, [game, settle]);
+
+    const tryMove = useCallback((from, idx, to, originEl) => {
+      if (!game || busy || from === to) return false;
+      if (!canPick(game.cols[from], idx)) return false;
+      if (!canDrop(game.cols[to], game.cols[from][idx])) return false;
+      captureFlight(game.cols[from].slice(idx), originEl);
+      commit(applyMove(game, from, idx, to));
+      return true;
+    }, [game, busy, commit, captureFlight]);
+
+    const deal = useCallback(() => {
+      if (!game || game.won || busy) return;
+      if (!game.stock.length) { say('The stock is empty.'); return; }
+      if (game.cols.some(c => !c.length)) { say('Fill every empty column before dealing.'); return; }
+      const stockEl = document.querySelector('#stock .stack');
+      captureFlight(game.stock[game.stock.length - 1], () => stockEl);
+      commit(applyDeal(game));
+    }, [game, busy, commit, say, captureFlight]);
+
+    const undo = useCallback(() => {
+      if (!history.length || busy) return;
+      const prev = history[history.length - 1];
+      setHistory(history.slice(0, -1));
+      setGame({ ...prev, elapsed: game.elapsed });
+      setSel(null); setHint(null);
+    }, [history, game, busy]);
+
+    const showHint = useCallback(() => {
+      if (!game || game.won) return;
+      const moves = findMoves(game);
+      setSel(null);
+      if (!moves.length) {
+        say(game.stock.length ? 'No moves left — deal from the stock.' : 'No moves left. Try undo or a new game.');
+        return;
+      }
+      setHint(moves[0]);
+      setTimeout(() => setHint(null), 1800);
+    }, [game, say]);
+
+    const autoMove = useCallback((col, idx) => {
+      const moves = findMoves(game, col).filter(m => m.idx === idx);
+      if (!moves.length) return false;
+      return tryMove(moves[0].from, moves[0].idx, moves[0].to);
+    }, [game, tryMove]);
+
+    // Keyboard shortcuts
+    useEffect(() => {
+      const onKey = (e) => {
+        if (screen !== 'play') return;
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
+        else if (e.key === 'd' || e.key === 'D') deal();
+        else if (e.key === 'h' || e.key === 'H') showHint();
+        else if (e.key === 'Escape') setSel(null);
+      };
+      window.addEventListener('keydown', onKey);
+      return () => window.removeEventListener('keydown', onKey);
+    }, [screen, undo, deal, showHint]);
+
+    // ------------------------------------------------ pointer handling
+    const columnAt = useCallback((x, y) => {
+      const el = tableauRef.current;
+      if (!el) return null;
+      const cols = el.querySelectorAll('.col');
+      for (let i = 0; i < cols.length; i++) {
+        const r = cols[i].getBoundingClientRect();
+        if (x >= r.left - metrics.gap / 2 && x <= r.right + metrics.gap / 2) return i;
+      }
+      return null;
+    }, [metrics.gap]);
+
+    const onCardDown = (col, idx) => (e) => {
+      if (!game || game.won || busy) return;
+      if (e.button != null && e.button !== 0) return;
+      const card = game.cols[col][idx];
+      const rect = e.currentTarget.getBoundingClientRect();
+      pressRef.current = {
+        col, idx, x: e.clientX, y: e.clientY, ox: e.clientX - rect.left, oy: e.clientY - rect.top,
+        pickable: card.up && canPick(game.cols[col], idx), moved: false, id: card.id, pointerId: e.pointerId,
+      };
+      e.preventDefault();
+    };
+
+    const onColDown = (col) => (e) => {
+      // Tap on empty space of a column (or its empty slot)
+      if (e.target !== e.currentTarget) return;
+      pressRef.current = { col, idx: -1, x: e.clientX, y: e.clientY, pickable: false, moved: false, id: null, empty: true };
+    };
+
+    useEffect(() => {
+      const move = (e) => {
+        const p = pressRef.current;
+        if (!p) return;
+        const dx = e.clientX - p.x, dy = e.clientY - p.y;
+        if (!p.moved && Math.hypot(dx, dy) > 6) {
+          p.moved = true;
+          if (p.pickable) { setSel(null); setHint(null); setDrag({ col: p.col, idx: p.idx, x: e.clientX, y: e.clientY, ox: p.ox, oy: p.oy }); }
+        }
+        if (p.moved && p.pickable) {
+          setDrag(d => d && { ...d, x: e.clientX, y: e.clientY });
+          const c = columnAt(e.clientX, e.clientY);
+          setHover(c != null && c !== p.col ? c : null);
+        }
+      };
+      const up = (e) => {
+        const p = pressRef.current;
+        pressRef.current = null;
+        if (!p || !game) { setDrag(null); setHover(null); return; }
+        if (p.moved) {
+          if (p.pickable) {
+            const c = columnAt(e.clientX, e.clientY);
+            const fromDragLayer = (card) => document.querySelector(`.drag-layer .card[data-id="${card.id}"]`);
+            if (c != null && c !== p.col && !tryMove(p.col, p.idx, c, fromDragLayer)) say('That card can’t go there.');
+          }
+          setDrag(null); setHover(null);
+          return;
+        }
+        // --- tap / click
+        setHint(null);
+        const now = Date.now();
+        const isDouble = p.id != null && lastTapRef.current.id === p.id && now - lastTapRef.current.t < 320;
+        lastTapRef.current = { id: p.id, t: now };
+        if (isDouble && p.pickable) {
+          lastTapRef.current = { id: null, t: 0 };
+          if (!autoMove(p.col, p.idx)) say('No spot for that card right now.');
+          return;
+        }
+        if (sel) {
+          if (sel.col === p.col) {
+            // Reselect deeper/shallower in same column, or deselect on same card
+            if (p.pickable && p.idx !== sel.idx) setSel({ col: p.col, idx: p.idx }); else setSel(null);
+            return;
+          }
+          if (tryMove(sel.col, sel.idx, p.col)) return;
+          if (p.pickable) { setSel({ col: p.col, idx: p.idx }); return; }
+          say('That card can’t go there.');
+          setSel(null);
+          return;
+        }
+        if (p.pickable) {
+          // Single click: send the run straight to its best spot; select it only if nothing fits.
+          if (!autoMove(p.col, p.idx)) { setSel({ col: p.col, idx: p.idx }); say('No spot for that card — tap a column or drag it.'); }
+        }
+        else if (p.id != null && !game.cols[p.col][p.idx].up) { /* face-down: nothing */ }
+        else if (p.id != null) say('Only a same-suit run in order can move.');
+      };
+      const cancel = () => { pressRef.current = null; setDrag(null); setHover(null); };
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+      window.addEventListener('pointercancel', cancel);
+      return () => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        window.removeEventListener('pointercancel', cancel);
+      };
+    }, [game, sel, tryMove, autoMove, columnAt, say]);
+
+    // ------------------------------------------------ layout helpers
+    const ch = metrics.cw * 1.42;
+    const narrow = metrics.cw < 48;                       // phone portrait: fan cards out further so ranks stay readable
+    const upStep = ch * (narrow ? 0.52 : 0.27);
+    const offsets = (col) => {
+      const downOff = ch * (narrow ? 0.17 : 0.13), upOff = upStep;
+      let total = 0;
+      const raw = col.map((c, i) => (i === 0 ? 0 : (col[i - 1].up ? upOff : downOff)));
+      for (const r of raw) total += r;
+      const avail = Math.max(ch, metrics.h - 6) - ch;
+      const k = total > avail ? avail / total : 1;
+      const tops = []; let acc = 0;
+      for (let i = 0; i < raw.length; i++) { acc += raw[i] * k; tops.push(acc); }
+      return tops;
+    };
+
+    // ------------------------------------------------ render
+    if (screen === 'menu' || !game) {
+      return h(Menu, { resume: game, onStart: start, onResume: () => setScreen('play'), skin, onSkin: setSkin, stats, onResetStats: () => setStats(emptyStats()) });
+    }
+
+    return h('div', { className: 'app' },
+      h('div', { className: 'bar' },
+        h('div', { className: 'brand' },
+          h('h1', null, 'Spider'),
+          h('span', { className: 'diff' }, DIFFICULTY[game.suits]),
+        ),
+        h('div', { className: 'stats' },
+          h('span', { className: 'score' }, 'Score', h('b', { id: 'score' }, game.score)),
+          h('span', null, 'Moves', h('b', { id: 'moves' }, game.moves)),
+          h('span', null, 'Time', h('b', { id: 'time' }, fmtTime(game.elapsed))),
+        ),
+        h('div', { className: 'controls' },
+          h(SkinPicker, { skin, onChange: setSkin }),
+          h('button', { className: 'btn', id: 'undo', onClick: undo, disabled: !history.length, title: 'Undo (Ctrl+Z)' }, 'Undo'),
+          h('button', { className: 'btn', id: 'hint', onClick: showHint, title: 'Hint (H)' }, 'Hint'),
+          h('button', { className: 'btn', id: 'new', onClick: () => setScreen('menu') }, 'New game'),
+        ),
+      ),
+      h('div', { className: 'piles' },
+        h('div', { className: 'done', 'aria-label': 'Completed runs' },
+          Array.from({ length: 8 }, (_, i) => h('div', { key: i, className: 'slot' + (pulse === i ? ' landed' : '') },
+            game.done[i] != null && !(celebrate && celebrate.some(r => r.slot === i)) && h('div', { className: 'mini', style: { color: RED[game.done[i]] ? 'var(--red)' : 'var(--black)' } }, SUITS[game.done[i]]),
+          )),
+        ),
+        h('div', { className: 'stock', id: 'stock', role: 'button', tabIndex: 0, onClick: deal,
+            onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deal(); } },
+            title: 'Deal a row (D)' },
+          h('div', { className: 'label' }, h('b', null, game.stock.length), game.stock.length === 1 ? 'deal left' : 'deals left'),
+          h('div', { className: 'stack' },
+            game.stock.length
+              ? game.stock.map((_, i) => h('div', { key: i, className: 'card down back', style: { left: i * 3 + 'px', top: 0 } }))
+              : h('div', { className: 'slot' }),
+          ),
+        ),
+      ),
+      h('div', { className: 'tableau', ref: tableauRef },
+        game.cols.map((col, c) => {
+          const tops = offsets(col);
+          const rs = runStart(col);
+          const isTarget = hover === c;
+          const isHintTarget = hint && hint.to === c;
+          return h('div', {
+            key: c, className: 'col' + (isTarget ? ' target' : '') + (isHintTarget ? ' hint-target' : ''),
+            'data-col': c, onPointerDown: onColDown(c),
+          },
+            col.map((card, i) => {
+              const ghost = drag && drag.col === c && i >= drag.idx;
+              const selected = sel && sel.col === c && i >= sel.idx;
+              const hinted = hint && hint.from === c && i >= hint.idx;
+              const locked = card.up && i < rs;
+              return h(Card, {
+                key: card.id, card, top: tops[i],
+                className: (ghost ? 'ghost ' : '') + (selected ? 'selected ' : '') + (hinted ? 'hint ' : '') + (locked ? 'locked' : ''),
+                onPointerDown: onCardDown(c, i),
+              });
+            }),
+          );
+        }),
+      ),
+      drag && h('div', { className: 'drag-layer', style: { transform: `translate(${drag.x - drag.ox}px, ${drag.y - drag.oy}px)` } },
+        game.cols[drag.col].slice(drag.idx).map((card, i) => h(Card, { key: card.id, card, top: i * upStep })),
+      ),
+      celebrate && h('div', { className: 'celebrate', 'aria-hidden': true },
+        celebrate.flatMap(run => run.cards.map((card, i) => {
+          const r = run.rects[i];
+          return h(Card, { key: card.id, card, top: 0, style: { position: 'fixed', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', transformOrigin: 'top left' } });
+        })),
+      ),
+      toast && h('div', { className: 'toast', role: 'status' }, toast),
+      game.won && !celebrate && h(Win, { game, stats, records, onNew: (n) => { if (n) start(n); else { setGame(null); setHistory([]); setScreen('menu'); } } }),
+    );
+  }
+
+  function mount(data) {
+    try { const k = localStorage.getItem(SKIN_KEY); if (SKINS[k]) document.documentElement.setAttribute('data-skin', k); } catch (e) {}
+    const saved = (data && data.game) ? data : (load() || {});
+    ReactDOM.createRoot(document.getElementById('root')).render(h(App, { boot: saved }));
+  }
+  const hot = window.claude && window.claude.hot;
+  if (hot && hot.ready) hot.ready(mount); else mount((hot && hot.data) || {});
+})();
+</script>
+
+<script>
+  // Offline support: register the service worker (skipped on file:// where it can't run).
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => { /* offline install unavailable */ });
+    });
+  }
+</script>
+</body>
+</html>
