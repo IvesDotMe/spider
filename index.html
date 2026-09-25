@@ -784,6 +784,162 @@
     :root[data-skin="aurora"] body::before, :root[data-skin="aurora"] body::after, :root[data-skin="aurora"]::before { animation: none; }
     :root[data-skin="aurora"]::after { display: none; }
   }
+  /* ---------- Glass: Apple-style Liquid Glass — translucent capsules over a living mesh gradient ---------- */
+  :root[data-skin="glass"] {
+    --felt: #f2f2f7;
+    --felt-deep: #e9e9f0;
+    --felt-line: rgba(255, 255, 255, 0.7);
+    --felt-ink: #1d1d1f;
+    --felt-ink-dim: rgba(60, 60, 67, 0.62);
+    --card: #ffffff;
+    --card-edge: rgba(0, 0, 0, 0.06);
+    --card-shadow: rgba(30, 30, 60, 0.16);
+    --back: #6e6af0;
+    --back-2: #e45bb0;
+    --back-line: rgba(255, 255, 255, 0.35);
+    --back-edge: rgba(255, 255, 255, 0.7);
+    --red: #ff3b30;
+    --black: #1d1d1f;
+    --brass: #0a84ff;
+    --brass-hover: #3399ff;
+    --brass-soft: rgba(10, 132, 255, 0.22);
+    --on-brass: #ffffff;
+    --red-soft: #ff3b30;
+    --mint: #0a84ff;
+    --mint-soft: rgba(10, 132, 255, 0.25);
+    --ui-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    --display-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    --rank-font: ui-rounded, "SF Pro Rounded", -apple-system, "Segoe UI", system-ui, sans-serif;
+    --body-bg: #f2f2f7;
+    --glass: rgba(255, 255, 255, 0.34);
+    --glass-strong: rgba(255, 255, 255, 0.62);
+    --glass-edge: rgba(255, 255, 255, 0.75);
+    --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.08) 42%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.22) 100%);
+    --glass-shadow: 0 10px 30px rgba(40, 40, 90, 0.14), 0 1px 2px rgba(40, 40, 90, 0.08);
+    --btn-bg: var(--glass);
+    --btn-bg-hover: var(--glass-strong);
+    --scrim: rgba(242, 242, 247, 0.35);
+    --toast-bg: rgba(255, 255, 255, 0.7);
+    --toast-ink: #1d1d1f;
+    --panel-bg: rgba(255, 255, 255, 0.5);
+    --r-card: calc(var(--cw) * 0.14);
+    --r-btn: 999px;
+    --r-panel: 30px;
+    --ui-size: 15px;
+    --mesh-a: rgba(255, 149, 0, 0.55);
+    --mesh-b: rgba(255, 45, 150, 0.45);
+    --mesh-c: rgba(94, 92, 230, 0.45);
+    --mesh-d: rgba(50, 200, 255, 0.5);
+    --mesh-e: rgba(52, 199, 89, 0.3);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root[data-skin="glass"] {
+      --felt: #000000;
+      --felt-deep: #000000;
+      --felt-line: rgba(255, 255, 255, 0.22);
+      --felt-ink: #f5f5f7;
+      --felt-ink-dim: rgba(235, 235, 245, 0.6);
+      --card: #1c1c1e;
+      --card-edge: rgba(255, 255, 255, 0.12);
+      --card-shadow: rgba(0, 0, 0, 0.6);
+      --red: #ff453a;
+      --black: #f5f5f7;
+      --red-soft: #ff453a;
+      --body-bg: #000000;
+      --glass: rgba(120, 120, 140, 0.22);
+      --glass-strong: rgba(140, 140, 160, 0.36);
+      --glass-edge: rgba(255, 255, 255, 0.28);
+      --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.03) 42%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.1) 100%);
+      --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+      --scrim: rgba(0, 0, 0, 0.4);
+      --toast-bg: rgba(44, 44, 46, 0.75);
+      --toast-ink: #f5f5f7;
+      --panel-bg: rgba(30, 30, 34, 0.5);
+      --mesh-a: rgba(255, 120, 0, 0.42);
+      --mesh-b: rgba(255, 45, 150, 0.38);
+      --mesh-c: rgba(94, 92, 230, 0.5);
+      --mesh-d: rgba(40, 160, 255, 0.4);
+      --mesh-e: rgba(40, 200, 120, 0.22);
+      color-scheme: dark;
+    }
+  }
+  /* the living wallpaper */
+  :root[data-skin="glass"] body { position: relative; isolation: isolate; }
+  :root[data-skin="glass"] body::after {
+    content: ""; position: fixed; inset: -25%; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(34% 30% at 18% 20%, var(--mesh-a), transparent 70%),
+      radial-gradient(32% 30% at 82% 16%, var(--mesh-b), transparent 70%),
+      radial-gradient(40% 34% at 70% 70%, var(--mesh-c), transparent 70%),
+      radial-gradient(36% 30% at 24% 78%, var(--mesh-d), transparent 70%),
+      radial-gradient(28% 24% at 50% 46%, var(--mesh-e), transparent 70%);
+    filter: blur(40px) saturate(130%);
+    animation: mesh 22s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes mesh {
+    0%   { transform: translate3d(-6%, -3%, 0) rotate(0deg) scale(1); }
+    50%  { transform: translate3d(5%, 4%, 0) rotate(8deg) scale(1.1); }
+    100% { transform: translate3d(-2%, 6%, 0) rotate(-6deg) scale(1.04); }
+  }
+  /* glass surfaces */
+  :root[data-skin="glass"] :is(.btn, .skin select, .choice, .key, .tool, .dock-btn, .panel, .toast) {
+    background-color: var(--glass);
+    background-image: var(--glass-sheen);
+    border: 1px solid var(--glass-edge);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.7), inset 0 -1px 1px rgba(255,255,255,0.12), var(--glass-shadow);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    backdrop-filter: blur(22px) saturate(180%);
+    color: var(--felt-ink);
+    text-shadow: none;
+    transition: transform 160ms cubic-bezier(.3,.7,.4,1.4), background-color 160ms ease;
+  }
+  :root[data-skin="glass"] .skin select { background-image: var(--glass-sheen), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 0 0, right 12px center; padding-left: 14px; }
+  :root[data-skin="glass"] :is(.btn, .choice, .key, .tool, .dock-btn):hover { background-color: var(--glass-strong); }
+  :root[data-skin="glass"] :is(.btn, .choice, .key, .tool, .dock-btn):active { transform: scale(0.94); }
+  :root[data-skin="glass"] .btn.primary, :root[data-skin="glass"] .key.active, :root[data-skin="glass"] .tool.on {
+    background-color: rgba(10, 132, 255, 0.85); color: #fff; border-color: rgba(255,255,255,0.5);
+  }
+  :root[data-skin="glass"] .key.active small, :root[data-skin="glass"] .tool.on span { color: #fff; }
+  :root[data-skin="glass"] .panel { border-radius: 30px; }
+  :root[data-skin="glass"] .choice { border-radius: 22px; }
+  :root[data-skin="glass"] .key { border-radius: 18px; }
+  :root[data-skin="glass"] .tool { border-radius: 22px; }
+  /* Apple type: sentence case, tight display tracking, no tracked caps */
+  :root[data-skin="glass"] .brand h1 { font-family: var(--display-font); font-weight: 700; letter-spacing: -0.025em; font-size: 26px; }
+  :root[data-skin="glass"] .panel h2 { font-weight: 700; letter-spacing: -0.03em; font-size: 32px; }
+  :root[data-skin="glass"] :is(.brand .diff, .eyebrow, .stats, .streak, .skin-label, .tool span, .stats-table th, .linkish, .win-stats div) { text-transform: none; letter-spacing: 0; }
+  :root[data-skin="glass"] .brand .diff { color: var(--felt-ink-dim); font-weight: 600; font-size: 15px; }
+  :root[data-skin="glass"] .eyebrow { color: var(--brass); font-weight: 600; font-size: 13px; }
+  :root[data-skin="glass"] .stats b, :root[data-skin="glass"] .dock-mid b, :root[data-skin="glass"] .win-stats b { font-family: var(--rank-font); font-weight: 700; color: var(--felt-ink); }
+  :root[data-skin="glass"] .tool span { font-size: 12px; font-weight: 600; }
+  :root[data-skin="glass"] .btn, :root[data-skin="glass"] .dock-btn, :root[data-skin="glass"] .skin select { font-weight: 600; font-size: 15px; }
+  :root[data-skin="glass"] .stats-table td, :root[data-skin="glass"] .stats-table th { border-color: rgba(120,120,128,0.2); }
+  /* spider cards: white, big nested radius, rounded numerals */
+  :root[data-skin="glass"] .card.up { background: var(--card); border: 1px solid var(--card-edge); box-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 4px 14px var(--card-shadow); }
+  :root[data-skin="glass"] .card .corner { font-weight: 700; letter-spacing: -0.02em; }
+  :root[data-skin="glass"] .card .corner .s { font-family: system-ui, sans-serif; }
+  :root[data-skin="glass"] .card.down, :root[data-skin="glass"] .stock .stack .back {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 40%),
+      radial-gradient(80% 60% at 20% 20%, #ff9f0a 0%, transparent 60%),
+      radial-gradient(80% 70% at 90% 80%, #5e5ce6 0%, transparent 65%),
+      linear-gradient(160deg, #ff375f, #bf5af2);
+    border: 1px solid var(--back-edge);
+    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.35), 0 2px 8px var(--card-shadow);
+  }
+  :root[data-skin="glass"] .col::before, :root[data-skin="glass"] .done .slot, :root[data-skin="glass"] .stock .slot {
+    border: 1px solid var(--glass-edge); background: var(--glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  }
+  :root[data-skin="glass"] .done .mini { background: var(--card); border-color: var(--card-edge); font-family: system-ui, sans-serif; }
+  :root[data-skin="glass"] .card.selected { box-shadow: 0 0 0 3px var(--brass), 0 10px 24px rgba(10,132,255,0.35); }
+  :root[data-skin="glass"] .card.hint { box-shadow: 0 0 0 3px #34c759, 0 10px 24px rgba(52,199,89,0.35); }
+  :root[data-skin="glass"] .done .slot.landed::after { border-color: var(--brass); }
+  @media (prefers-reduced-motion: reduce) {
+    :root[data-skin="glass"] body::after { animation: none; }
+    :root[data-skin="glass"] :is(.btn, .choice, .key, .tool, .dock-btn):active { transform: none; }
+  }
   /* ---------- theme picker ---------- */
   .skin { display: flex; align-items: center; gap: 6px; }
   .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
@@ -904,6 +1060,7 @@
     walnut: 'Walnut',
     deco: 'Walnut Deco',
     aurora: 'Aurora',
+    glass: 'Glass',
   };
 
   // Unbiased integer in [0, n) from the browser's cryptographic RNG (rejection sampling

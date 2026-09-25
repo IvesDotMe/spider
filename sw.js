@@ -1,6 +1,6 @@
-// Spider Solitaire service worker — build e74e3907
+// Spider Solitaire service worker — build 494e81b1
 // Precaches the app shell so the game opens with no network; fonts are cached as they load.
-const VERSION = 'spider-e74e3907';
+const VERSION = 'spider-494e81b1';
 const SHELL = [
   './',
   './index.html',
