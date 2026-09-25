@@ -45,11 +45,6 @@ delete the home-screen icon and add it again.
 - Controls: tap a card to send it to its best spot, or drag it. Undo (Ctrl+Z), Hint (H),
   Deal (D / tap the stock).
 - Shuffle: Fisher–Yates over `crypto.getRandomValues` (rejection sampling, no modulo bias).
-- Themes (`data-skin` on `<html>`): Felt (default), Éditorial paper and Éditorial noir
-  (tokens from the L'IMPACT magazine site: Playfair Display + Cormorant Garamond, bronze/champagne
-  accents, radius 0), iPS (zinc surfaces, Poppins, #0072c6 accent). Each is a `:root[data-skin=…]`
-  token block in the stylesheet; add a theme by adding a block and an entry in `SKINS`.
+
 - Storage: `localStorage` keys `spider-solitaire-save-v1` (game + undo history) and
   `spider-solitaire-skin` (theme).
-
-Published (online-only) copy: https://claude.ai/artifact/WdEctLwsPoGa7Zg7gLsDDH
