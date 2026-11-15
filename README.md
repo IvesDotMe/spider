@@ -45,8 +45,13 @@ delete the home-screen icon and add it again.
 - Controls: tap a card to send it to its best spot, or drag it. Undo (Ctrl+Z), Hint (H),
   Deal (D / tap the stock).
 - Shuffle: Fisher–Yates over `crypto.getRandomValues` (rejection sampling, no modulo bias).
-- Themes (`data-skin` on `<html>`): Felt (default), Éditorial paper and Éditorial noir
-  (tokens from the L'IMPACT magazine site: Playfair Display + Cormorant Garamond, bronze/champagne
-  accents, radius 0), iPS (zinc surfaces, Poppins, #0072c6 accent), Classic (bright teal cloth, Oswald ranks, Alfa Slab One labels, red lace backs, yellow accent), Walnut (wood-grain table, beveled cream paper, gold inlay, burgundy accents, Playfair numerals), Walnut Deco (same table, Cinzel numerals + Josefin Sans labels), Aurora (animated northern lights and stars, dark glass cards, Orbitron numerals, gradient accents), Glass (Apple Liquid Glass style: translucent capsules over a moving mesh gradient, SF Pro Rounded, follows system light/dark). Each is a `:root[data-skin=…]`
-  token block in the stylesheet; add a theme by adding a block and an entry in `SKINS`.
+- Themes (`data-skin` on `<html>`): Classic (default: bright teal cloth, Oswald ranks, red lace backs),
+  Felt, Walnut, Walnut Deco, Aurora (animated northern lights), Neon Drive (synthwave sun over a scrolling
+  grid, glowing cards), Inferno (obsidian cards over a lava glow, rising embers), Sakura (washi paper, red
+  sun, falling petals, indigo wave backs) and Abyss (light shafts and bubbles, pearl cards). Each is a
+  `:root[data-skin=…]` token block in the stylesheet; add a theme by adding a block and an entry in `SKINS`.
+- Phones: ten columns leave each card ~37px wide on an iPhone, so cards are drawn taller there and the
+  face is all index (rank top-left, suit top-right, one big pip); face-up cards fan out by a full rank row.
+- Hint: highlights the cards to move (gold, bobbing) and the card or empty column to move them to (green),
+  and says the move in a toast. Sideways moves that gain nothing are never suggested.
 - Storage: `localStorage` keys `spider-solitaire-save-v1` (game + undo history), `spider-solitaire-skin` (theme) and `spider-solitaire-stats-v1` (record: played/won per difficulty, best score/time/fewest moves, current and best streak; a game counts when won or abandoned after at least one move).

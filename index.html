@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <title>Spider Solitaire</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&family=Cinzel:wght@600;700;900&family=Josefin+Sans:wght@400;600;700&family=Orbitron:wght@600;700;900&family=Exo+2:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@500;700&family=Alfa+Slab+One&family=Arvo:wght@400;700&family=Oswald:wght@600;700&family=Cinzel:wght@600;700;900&family=Josefin+Sans:wght@400;600;700&family=Orbitron:wght@600;700;900&family=Exo+2:wght@400;600;700&family=Shippori+Mincho:wght@500;700;800&display=swap">
 <style>
   :root {
     --felt: #1a4536;
@@ -53,123 +53,12 @@
     --ui-size: 14px;
     --rank-font: var(--display-font);
     --cw: 72px;
-    --ch: calc(var(--cw) * 1.42);
+    --ch: calc(var(--cw) * var(--chr, 1.42));
     --gap: 10px;
     --gutter: 16px;
     color-scheme: dark;
   }
-  /* ---------- Éditorial (paper): L'IMPACT magazine tokens ---------- */
-  :root[data-skin="paper"] {
-    --felt: #faf7f1;
-    --felt-deep: #f4efe6;
-    --felt-line: #e3dccb;
-    --felt-ink: #211d17;
-    --felt-ink-dim: #6f675a;
-    --card: #fffdf8;
-    --card-edge: #d9d0bc;
-    --card-shadow: rgba(60, 50, 30, 0.18);
-    --back: #f1e9d8;
-    --back-2: #e4dac5;
-    --back-line: rgba(138, 109, 63, 0.38);
-    --back-edge: #b89a67;
-    --red: #8f2f2a;
-    --black: #211d17;
-    --brass: #8a6d3f;
-    --brass-hover: #6e572f;
-    --brass-soft: rgba(138, 109, 63, 0.22);
-    --on-brass: #fffdf8;
-    --red-soft: #8f2f2a;
-    --mint: #4f7a6f;
-    --mint-soft: rgba(79, 122, 111, 0.22);
-    --ui-font: "Cormorant Garamond", Garamond, Georgia, serif;
-    --display-font: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
-    --body-bg: var(--felt);
-    --btn-bg: transparent;
-    --btn-bg-hover: var(--brass-soft);
-    --scrim: rgba(33, 29, 23, 0.55);
-    --toast-bg: #211d17;
-    --toast-ink: #faf7f1;
-    --panel-bg: #fffdf8;
-    --r-card: 0px;
-    --r-btn: 0px;
-    --r-panel: 0px;
-    --ui-size: 15px;
-    color-scheme: light;
-  }
-  /* ---------- Éditorial noir ---------- */
-  :root[data-skin="noir"] {
-    --felt: #1f1b15;
-    --felt-deep: #100e0b;
-    --felt-line: #332c20;
-    --felt-ink: #ece4d4;
-    --felt-ink-dim: #a3987f;
-    --card: #1c1812;
-    --card-edge: #3d3427;
-    --card-shadow: rgba(0, 0, 0, 0.6);
-    --back: #26211a;
-    --back-2: #1a1611;
-    --back-line: rgba(201, 163, 94, 0.32);
-    --back-edge: #4a3f2c;
-    --red: #d9927c;
-    --black: #ece4d4;
-    --brass: #c9a35e;
-    --brass-hover: #ddb977;
-    --brass-soft: rgba(201, 163, 94, 0.25);
-    --on-brass: #161310;
-    --red-soft: #d9927c;
-    --mint: #ece4d4;
-    --mint-soft: rgba(236, 228, 212, 0.22);
-    --ui-font: "Cormorant Garamond", Garamond, Georgia, serif;
-    --display-font: "Playfair Display", Didot, "Bodoni MT", Georgia, serif;
-    --body-bg: radial-gradient(120% 90% at 50% 0%, var(--felt) 0%, var(--felt-deep) 100%);
-    --btn-bg: transparent;
-    --btn-bg-hover: var(--brass-soft);
-    --scrim: rgba(0, 0, 0, 0.7);
-    --toast-bg: #1c1812;
-    --toast-ink: #ece4d4;
-    --panel-bg: #161310;
-    --r-card: 0px;
-    --r-btn: 0px;
-    --r-panel: 0px;
-    --ui-size: 15px;
-  }
-  /* ---------- iPS: zinc chrome, #0072c6 accent ---------- */
-  :root[data-skin="ips"] {
-    --felt: #27272a;
-    --felt-deep: #18181b;
-    --felt-line: #3f3f46;
-    --felt-ink: #fafafa;
-    --felt-ink-dim: #a1a1aa;
-    --card: #fafafa;
-    --card-edge: #d4d4d8;
-    --card-shadow: rgba(0, 0, 0, 0.5);
-    --back: #0072c6;
-    --back-2: #00589a;
-    --back-line: rgba(255, 255, 255, 0.22);
-    --back-edge: #004f8a;
-    --red: #dc2626;
-    --black: #18181b;
-    --brass: #0072c6;
-    --brass-hover: #1a86d9;
-    --brass-soft: rgba(0, 114, 198, 0.35);
-    --on-brass: #ffffff;
-    --red-soft: #f87171;
-    --mint: #3a97e8;
-    --mint-soft: rgba(58, 151, 232, 0.28);
-    --ui-font: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
-    --display-font: "Poppins", -apple-system, "Segoe UI", Roboto, sans-serif;
-    --body-bg: var(--felt-deep);
-    --btn-bg: #27272a;
-    --btn-bg-hover: #3f3f46;
-    --scrim: rgba(0, 0, 0, 0.6);
-    --toast-bg: #27272a;
-    --toast-ink: #fafafa;
-    --panel-bg: #27272a;
-    --r-card: calc(var(--cw) * 0.08);
-    --r-btn: 6px;
-    --r-panel: 12px;
-    --ui-size: 14px;
-  }
+
   html, body { height: 100%; }
   body {
     margin: 0;
@@ -784,162 +673,455 @@
     :root[data-skin="aurora"] body::before, :root[data-skin="aurora"] body::after, :root[data-skin="aurora"]::before { animation: none; }
     :root[data-skin="aurora"]::after { display: none; }
   }
-  /* ---------- Glass: Apple-style Liquid Glass — translucent capsules over a living mesh gradient ---------- */
-  :root[data-skin="glass"] {
-    --felt: #f2f2f7;
-    --felt-deep: #e9e9f0;
-    --felt-line: rgba(255, 255, 255, 0.7);
-    --felt-ink: #1d1d1f;
-    --felt-ink-dim: rgba(60, 60, 67, 0.62);
-    --card: #ffffff;
-    --card-edge: rgba(0, 0, 0, 0.06);
-    --card-shadow: rgba(30, 30, 60, 0.16);
-    --back: #6e6af0;
-    --back-2: #e45bb0;
-    --back-line: rgba(255, 255, 255, 0.35);
-    --back-edge: rgba(255, 255, 255, 0.7);
-    --red: #ff3b30;
-    --black: #1d1d1f;
-    --brass: #0a84ff;
-    --brass-hover: #3399ff;
-    --brass-soft: rgba(10, 132, 255, 0.22);
-    --on-brass: #ffffff;
-    --red-soft: #ff3b30;
-    --mint: #0a84ff;
-    --mint-soft: rgba(10, 132, 255, 0.25);
-    --ui-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
-    --display-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
-    --rank-font: ui-rounded, "SF Pro Rounded", -apple-system, "Segoe UI", system-ui, sans-serif;
-    --body-bg: #f2f2f7;
-    --glass: rgba(255, 255, 255, 0.34);
-    --glass-strong: rgba(255, 255, 255, 0.62);
-    --glass-edge: rgba(255, 255, 255, 0.75);
-    --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.08) 42%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.22) 100%);
-    --glass-shadow: 0 10px 30px rgba(40, 40, 90, 0.14), 0 1px 2px rgba(40, 40, 90, 0.08);
-    --btn-bg: var(--glass);
-    --btn-bg-hover: var(--glass-strong);
-    --scrim: rgba(242, 242, 247, 0.35);
-    --toast-bg: rgba(255, 255, 255, 0.7);
-    --toast-ink: #1d1d1f;
-    --panel-bg: rgba(255, 255, 255, 0.5);
-    --r-card: calc(var(--cw) * 0.14);
-    --r-btn: 999px;
-    --r-panel: 30px;
+
+  /* ====================================================================
+     Epic themes: Neon Drive, Inferno, Sakura, Abyss
+     ==================================================================== */
+  :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"]) body { position: relative; isolation: isolate; }
+  :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"]) body::before,
+  :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"]) body::after,
+  :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"])::before {
+    content: ""; position: fixed; z-index: -1; pointer-events: none;
+  }
+
+  /* ---------- Neon Drive: synthwave sunset over an endless scrolling grid ---------- */
+  :root[data-skin="neon"] {
+    --felt: #1b0b3a;
+    --felt-deep: #07020f;
+    --felt-line: rgba(255, 70, 220, 0.42);
+    --felt-ink: #fdf3ff;
+    --felt-ink-dim: rgba(253, 243, 255, 0.7);
+    --card: #120826;
+    --card-edge: rgba(41, 240, 255, 0.6);
+    --card-shadow: rgba(0, 0, 0, 0.7);
+    --back: #ff2e97;
+    --back-2: #6a22e0;
+    --back-line: rgba(255, 255, 255, 0.32);
+    --back-edge: #ffe14d;
+    --red: #ff4fa3;
+    --black: #29f0ff;
+    --brass: #ffe14d;
+    --brass-hover: #fff08a;
+    --brass-soft: rgba(255, 225, 77, 0.35);
+    --on-brass: #1a0730;
+    --red-soft: #ff7fbd;
+    --mint: #29f0ff;
+    --mint-soft: rgba(41, 240, 255, 0.35);
+    --ui-font: "Exo 2", "Segoe UI", system-ui, sans-serif;
+    --display-font: "Orbitron", "Exo 2", system-ui, sans-serif;
+    --rank-font: "Orbitron", "Exo 2", system-ui, sans-serif;
+    --body-bg: linear-gradient(180deg, #05010c 0%, #170836 34%, #4a1474 50%, #c22a8f 58%, #ff5fa8 60%, #0d0320 60.1%, #05010c 100%);
+    --btn-bg: rgba(255, 46, 151, 0.12);
+    --btn-bg-hover: rgba(255, 46, 151, 0.28);
+    --scrim: rgba(7, 2, 15, 0.8);
+    --toast-bg: rgba(18, 8, 38, 0.96);
+    --toast-ink: #fdf3ff;
+    --panel-bg: rgba(18, 8, 38, 0.92);
+    --r-card: calc(var(--cw) * 0.08);
+    --r-btn: 4px;
+    --r-panel: 10px;
+    --ui-size: 14px;
+  }
+  /* the sun, sliced by scanlines, resting on the horizon */
+  :root[data-skin="neon"] body::before {
+    --sun: min(46vw, 34vh, 320px);
+    width: var(--sun); height: var(--sun); left: calc(50% - var(--sun) / 2); top: calc(60% - var(--sun) * 0.86);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fff27a 0%, #ffb347 38%, #ff2e97 78%, #b3157a 100%);
+    box-shadow: 0 0 80px rgba(255, 46, 151, 0.75), 0 0 180px rgba(255, 120, 60, 0.35);
+    -webkit-mask-image: linear-gradient(180deg, #000 0 50%, transparent 50% 53%, #000 53% 60%, transparent 60% 64%, #000 64% 70%, transparent 70% 75%, #000 75% 80%, transparent 80% 86%, #000 86% 86.1%, transparent 86.1%);
+    mask-image: linear-gradient(180deg, #000 0 50%, transparent 50% 53%, #000 53% 60%, transparent 60% 64%, #000 64% 70%, transparent 70% 75%, #000 75% 80%, transparent 80% 86%, #000 86% 86.1%, transparent 86.1%);
+    animation: neonSun 5s ease-in-out infinite alternate;
+  }
+  /* the grid, racing toward you */
+  :root[data-skin="neon"] body::after {
+    left: -60%; right: -60%; top: 60%; height: 90vh;
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 70, 220, 0.85) 0 2px, transparent 2px 64px),
+      repeating-linear-gradient(0deg, rgba(41, 240, 255, 0.8) 0 2px, transparent 2px 64px);
+    transform: perspective(340px) rotateX(64deg);
+    transform-origin: 50% 0;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 22%);
+    animation: neonGrid 0.9s linear infinite;
+    will-change: background-position;
+  }
+  :root[data-skin="neon"]::before {
+    inset: 0 0 42% 0;
+    background:
+      radial-gradient(1.6px 1.6px at 8% 26%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 66% 44%, #ffc9f1 60%, transparent 61%),
+      radial-gradient(2px 2px at 44% 16%, #9ff6ff 60%, transparent 61%), radial-gradient(1px 1px at 84% 36%, #fff 60%, transparent 61%),
+      radial-gradient(1.4px 1.4px at 28% 58%, #fff 60%, transparent 61%), radial-gradient(1px 1px at 58% 70%, #ffc9f1 60%, transparent 61%);
+    background-size: 240px 220px;
+    animation: twinkle2 2.4s ease-in-out infinite;
+  }
+  @keyframes neonGrid { to { background-position: 0 0, 0 64px; } }
+  @keyframes neonSun { from { filter: brightness(1); } to { filter: brightness(1.18) saturate(1.2); } }
+  :root[data-skin="neon"] :is(.btn, .skin select, .choice, .key, .tool, .dock-btn) {
+    border: 1px solid rgba(255, 70, 220, 0.6);
+    box-shadow: 0 0 10px rgba(255, 46, 151, 0.35), inset 0 0 10px rgba(255, 46, 151, 0.12);
+    text-shadow: 0 0 8px rgba(255, 120, 220, 0.7);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  }
+  :root[data-skin="neon"] .btn.primary { background: linear-gradient(135deg, #ffe14d, #ff2e97); color: #1a0730; border-color: transparent; text-shadow: none; font-weight: 700; }
+  :root[data-skin="neon"] :is(.brand h1, .panel h2) {
+    font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; font-style: italic;
+    background: linear-gradient(180deg, #fff 10%, #29f0ff 45%, #ff2e97 90%); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255, 46, 151, 0.8));
+  }
+  :root[data-skin="neon"] .brand h1 { font-size: 19px; }
+  :root[data-skin="neon"] :is(.brand .diff, .eyebrow) { color: var(--brass); letter-spacing: 0.22em; text-shadow: 0 0 10px rgba(255, 225, 77, 0.7); }
+  :root[data-skin="neon"] :is(.stats b, .dock-mid b, .side-stats b) { color: #29f0ff; text-shadow: 0 0 12px rgba(41, 240, 255, 0.9); }
+  :root[data-skin="neon"] .panel { border: 1px solid rgba(41, 240, 255, 0.6); box-shadow: 0 0 0 1px rgba(0,0,0,0.5), 0 0 40px rgba(41, 240, 255, 0.3), 0 0 90px rgba(255, 46, 151, 0.35); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+  :root[data-skin="neon"] .choice:hover { border-color: #29f0ff; box-shadow: 0 0 20px rgba(41, 240, 255, 0.55); }
+  :root[data-skin="neon"] :is(.stats-table td, .stats-table th) { border-color: rgba(255, 70, 220, 0.3); }
+  :root[data-skin="neon"] .skin select option { background: #120826; color: #fdf3ff; }
+
+  /* ---------- Inferno: obsidian over a lava glow, embers rising ---------- */
+  :root[data-skin="inferno"] {
+    --felt: #2a0a05;
+    --felt-deep: #070202;
+    --felt-line: rgba(255, 140, 60, 0.36);
+    --felt-ink: #ffe9d2;
+    --felt-ink-dim: rgba(255, 233, 210, 0.68);
+    --card: #1c1210;
+    --card-edge: rgba(255, 140, 60, 0.55);
+    --card-shadow: rgba(0, 0, 0, 0.75);
+    --back: #7a1503;
+    --back-2: #1f0502;
+    --back-line: rgba(255, 170, 60, 0.5);
+    --back-edge: #ff9d2e;
+    --red: #ff5a1f;
+    --black: #f2e3c6;
+    --brass: #ffb02e;
+    --brass-hover: #ffc965;
+    --brass-soft: rgba(255, 176, 46, 0.35);
+    --on-brass: #2a0d00;
+    --red-soft: #ff7a4a;
+    --mint: #ffe08a;
+    --mint-soft: rgba(255, 224, 138, 0.35);
+    --ui-font: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+    --display-font: "Cinzel", "Trajan Pro", Georgia, serif;
+    --rank-font: "Cinzel", "Trajan Pro", Georgia, serif;
+    --body-bg: radial-gradient(130% 75% at 50% 112%, #ff6a1f 0%, #b32a06 18%, #5a1003 38%, #1c0603 62%, #070202 100%);
+    --btn-bg: rgba(255, 120, 40, 0.10);
+    --btn-bg-hover: rgba(255, 120, 40, 0.26);
+    --scrim: rgba(7, 2, 2, 0.8);
+    --toast-bg: rgba(28, 10, 6, 0.96);
+    --toast-ink: #ffe9d2;
+    --panel-bg: rgba(24, 9, 6, 0.93);
+    --r-card: calc(var(--cw) * 0.07);
+    --r-btn: 3px;
+    --r-panel: 8px;
+    --ui-size: 14px;
+  }
+  /* two ember layers drifting up at different speeds */
+  :root[data-skin="inferno"] body::before {
+    inset: 0;
+    background:
+      radial-gradient(2.5px 2.5px at 12% 20%, #ffd27a 40%, transparent 70%), radial-gradient(2px 2px at 72% 8%, #ff9d2e 40%, transparent 70%),
+      radial-gradient(3px 3px at 38% 46%, #ffb02e 40%, transparent 70%), radial-gradient(1.5px 1.5px at 88% 58%, #ffe08a 40%, transparent 70%),
+      radial-gradient(2px 2px at 22% 78%, #ff7a1f 40%, transparent 70%), radial-gradient(2.5px 2.5px at 60% 90%, #ffd27a 40%, transparent 70%),
+      radial-gradient(1.5px 1.5px at 50% 30%, #ff9d2e 40%, transparent 70%);
+    background-size: 260px 480px;
+    animation: embers 11s linear infinite;
+    will-change: background-position;
+  }
+  :root[data-skin="inferno"]::before {
+    inset: 0;
+    background:
+      radial-gradient(2px 2px at 30% 12%, #ffe08a 40%, transparent 70%), radial-gradient(3px 3px at 80% 34%, #ff8a2e 40%, transparent 70%),
+      radial-gradient(1.5px 1.5px at 10% 60%, #ffd27a 40%, transparent 70%), radial-gradient(2.5px 2.5px at 56% 74%, #ffb02e 40%, transparent 70%),
+      radial-gradient(2px 2px at 92% 92%, #ff7a1f 40%, transparent 70%);
+    background-size: 340px 620px;
+    animation: embers2 7s linear infinite;
+    opacity: 0.85;
+  }
+  /* the heat itself: a slow breathing glow from below */
+  :root[data-skin="inferno"] body::after {
+    inset: 40% -10% -10% -10%;
+    background: radial-gradient(60% 70% at 50% 100%, rgba(255, 110, 30, 0.55), rgba(255, 60, 10, 0.18) 55%, transparent 75%);
+    animation: heat 3.6s ease-in-out infinite alternate;
+  }
+  @keyframes embers { to { background-position: 60px -480px; } }
+  @keyframes embers2 { to { background-position: -80px -620px; } }
+  @keyframes heat { from { opacity: 0.55; transform: scaleY(0.94); } to { opacity: 1; transform: scaleY(1.06); } }
+  :root[data-skin="inferno"] :is(.btn, .skin select, .choice, .key, .tool, .dock-btn) {
+    border: 1px solid rgba(255, 140, 60, 0.5);
+    background-image: linear-gradient(180deg, rgba(255, 150, 60, 0.14), rgba(0, 0, 0, 0.25));
+    box-shadow: inset 0 1px 0 rgba(255, 200, 120, 0.2), 0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+  :root[data-skin="inferno"] .btn.primary { background: linear-gradient(180deg, #ffc965, #ff7a1f 70%, #c23a06); color: #2a0d00; border-color: #ffd27a; font-weight: 700; }
+  :root[data-skin="inferno"] :is(.brand h1, .panel h2) {
+    font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase;
+    background: linear-gradient(180deg, #fff3c4 0%, #ffb02e 45%, #ff4a0f 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 12px rgba(255, 90, 20, 0.75));
+  }
+  :root[data-skin="inferno"] .brand h1 { font-size: 20px; }
+  :root[data-skin="inferno"] :is(.brand .diff, .eyebrow) { letter-spacing: 0.22em; }
+  :root[data-skin="inferno"] :is(.stats b, .dock-mid b, .side-stats b) { color: #ffd27a; text-shadow: 0 0 12px rgba(255, 120, 30, 0.9); }
+  :root[data-skin="inferno"] .panel { border: 1px solid rgba(255, 140, 60, 0.55); box-shadow: 0 0 0 1px #000, 0 0 50px rgba(255, 90, 20, 0.35), 0 30px 80px rgba(0, 0, 0, 0.8); }
+  :root[data-skin="inferno"] .choice:hover { border-color: #ffd27a; box-shadow: 0 0 22px rgba(255, 120, 30, 0.6); }
+  :root[data-skin="inferno"] :is(.stats-table td, .stats-table th) { border-color: rgba(255, 140, 60, 0.28); }
+  :root[data-skin="inferno"] .skin select option { background: #1c0a06; color: #ffe9d2; }
+
+  /* ---------- Sakura: washi paper, a red sun, petals on the wind ---------- */
+  :root[data-skin="sakura"] {
+    --felt: #f8f0e9;
+    --felt-deep: #efe1da;
+    --felt-line: rgba(70, 40, 55, 0.24);
+    --felt-ink: #2b2228;
+    --felt-ink-dim: rgba(43, 34, 40, 0.64);
+    --card: #fffdf8;
+    --card-edge: #d8c6bd;
+    --card-shadow: rgba(90, 40, 55, 0.24);
+    --back: #2f3f72;
+    --back-2: #1a2447;
+    --back-line: rgba(255, 255, 255, 0.5);
+    --back-edge: #141b38;
+    --red: #c8372d;
+    --black: #221c22;
+    --brass: #c8372d;
+    --brass-hover: #a92a21;
+    --brass-soft: rgba(200, 55, 45, 0.2);
+    --on-brass: #fffaf5;
+    --red-soft: #c8372d;
+    --mint: #3d7a5a;
+    --mint-soft: rgba(61, 122, 90, 0.25);
+    --ui-font: "Shippori Mincho", "Hiragino Mincho ProN", "Iowan Old Style", Georgia, serif;
+    --display-font: "Shippori Mincho", "Hiragino Mincho ProN", "Iowan Old Style", Georgia, serif;
+    --rank-font: "Shippori Mincho", "Hiragino Mincho ProN", Georgia, serif;
+    --body-bg:
+      radial-gradient(80% 55% at 85% 0%, #ffd3df 0%, transparent 62%),
+      radial-gradient(70% 50% at 0% 100%, #ffe1e9 0%, transparent 62%),
+      linear-gradient(180deg, #fcf6f0, #f1e3dc);
+    --btn-bg: rgba(255, 255, 255, 0.6);
+    --btn-bg-hover: rgba(255, 255, 255, 0.95);
+    --scrim: rgba(70, 35, 48, 0.5);
+    --toast-bg: #2b2228;
+    --toast-ink: #fffaf5;
+    --panel-bg: #fffaf5;
+    --r-card: calc(var(--cw) * 0.06);
+    --r-btn: 3px;
+    --r-panel: 6px;
     --ui-size: 15px;
-    --mesh-a: rgba(255, 149, 0, 0.55);
-    --mesh-b: rgba(255, 45, 150, 0.45);
-    --mesh-c: rgba(94, 92, 230, 0.45);
-    --mesh-d: rgba(50, 200, 255, 0.5);
-    --mesh-e: rgba(52, 199, 89, 0.3);
     color-scheme: light;
   }
-  @media (prefers-color-scheme: dark) {
-    :root[data-skin="glass"] {
-      --felt: #000000;
-      --felt-deep: #000000;
-      --felt-line: rgba(255, 255, 255, 0.22);
-      --felt-ink: #f5f5f7;
-      --felt-ink-dim: rgba(235, 235, 245, 0.6);
-      --card: #1c1c1e;
-      --card-edge: rgba(255, 255, 255, 0.12);
-      --card-shadow: rgba(0, 0, 0, 0.6);
-      --red: #ff453a;
-      --black: #f5f5f7;
-      --red-soft: #ff453a;
-      --body-bg: #000000;
-      --glass: rgba(120, 120, 140, 0.22);
-      --glass-strong: rgba(140, 140, 160, 0.36);
-      --glass-edge: rgba(255, 255, 255, 0.28);
-      --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.03) 42%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.1) 100%);
-      --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
-      --scrim: rgba(0, 0, 0, 0.4);
-      --toast-bg: rgba(44, 44, 46, 0.75);
-      --toast-ink: #f5f5f7;
-      --panel-bg: rgba(30, 30, 34, 0.5);
-      --mesh-a: rgba(255, 120, 0, 0.42);
-      --mesh-b: rgba(255, 45, 150, 0.38);
-      --mesh-c: rgba(94, 92, 230, 0.5);
-      --mesh-d: rgba(40, 160, 255, 0.4);
-      --mesh-e: rgba(40, 200, 120, 0.22);
-      color-scheme: dark;
-    }
+  /* the sun */
+  :root[data-skin="sakura"]::before {
+    --sun: min(62vw, 44vh, 420px);
+    width: var(--sun); height: var(--sun); right: calc(var(--sun) * -0.18); top: calc(var(--sun) * -0.12);
+    border-radius: 50%;
+    background: radial-gradient(circle, #d8433a 0%, #c8372d 70%, #b62d25 100%);
+    opacity: 0.2;
   }
-  /* the living wallpaper */
-  :root[data-skin="glass"] body { position: relative; isolation: isolate; }
-  :root[data-skin="glass"] body::after {
-    content: ""; position: fixed; inset: -25%; z-index: -1; pointer-events: none;
+  /* petals: two layers, different size and speed, falling on a slant */
+  :root[data-skin="sakura"] body::before {
+    inset: 0;
     background:
-      radial-gradient(34% 30% at 18% 20%, var(--mesh-a), transparent 70%),
-      radial-gradient(32% 30% at 82% 16%, var(--mesh-b), transparent 70%),
-      radial-gradient(40% 34% at 70% 70%, var(--mesh-c), transparent 70%),
-      radial-gradient(36% 30% at 24% 78%, var(--mesh-d), transparent 70%),
-      radial-gradient(28% 24% at 50% 46%, var(--mesh-e), transparent 70%);
-    filter: blur(40px) saturate(130%);
-    animation: mesh 22s ease-in-out infinite alternate;
+      radial-gradient(ellipse 7px 4px at 12% 8%, #ff9fba 55%, transparent 60%), radial-gradient(ellipse 5px 8px at 64% 22%, #ffc2d1 55%, transparent 60%),
+      radial-gradient(ellipse 8px 5px at 36% 44%, #ffb0c6 55%, transparent 60%), radial-gradient(ellipse 5px 7px at 86% 60%, #ff9fba 55%, transparent 60%),
+      radial-gradient(ellipse 7px 4px at 22% 80%, #ffc2d1 55%, transparent 60%), radial-gradient(ellipse 6px 4px at 52% 94%, #ffb0c6 55%, transparent 60%);
+    background-size: 300px 380px;
+    animation: petals 13s linear infinite;
+    will-change: background-position;
+  }
+  :root[data-skin="sakura"] body::after {
+    inset: 0;
+    background:
+      radial-gradient(ellipse 10px 6px at 20% 14%, #ff8fae 55%, transparent 60%), radial-gradient(ellipse 7px 11px at 74% 40%, #ffa9c0 55%, transparent 60%),
+      radial-gradient(ellipse 11px 6px at 44% 70%, #ff9fba 55%, transparent 60%), radial-gradient(ellipse 8px 5px at 92% 90%, #ffb9cb 55%, transparent 60%);
+    background-size: 420px 520px;
+    animation: petals2 9s linear infinite;
+    opacity: 0.9;
+  }
+  @keyframes petals { to { background-position: -300px 760px; } }
+  @keyframes petals2 { to { background-position: -420px 1040px; } }
+  :root[data-skin="sakura"] :is(.btn, .skin select, .choice, .key, .tool, .dock-btn) {
+    border: 1px solid rgba(70, 40, 55, 0.3);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 2px 8px rgba(90, 40, 55, 0.12);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  :root[data-skin="sakura"] .btn.primary { background: #c8372d; color: #fffaf5; border-color: #a92a21; }
+  :root[data-skin="sakura"] :is(.brand h1, .panel h2) { font-weight: 800; letter-spacing: 0.04em; }
+  :root[data-skin="sakura"] .brand h1::before { content: "桜"; display: inline-grid; place-items: center; width: 1.35em; height: 1.35em; margin-right: 0.4em; background: #c8372d; color: #fffaf5; font-size: 0.72em; border-radius: 3px; vertical-align: 0.1em; }
+  :root[data-skin="sakura"] :is(.brand .diff, .eyebrow) { color: #c8372d; letter-spacing: 0.24em; }
+  :root[data-skin="sakura"] :is(.stats b, .dock-mid b, .side-stats b) { color: #c8372d; }
+  :root[data-skin="sakura"] .panel { border: 1px solid rgba(70, 40, 55, 0.25); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.5), 0 30px 70px rgba(90, 40, 55, 0.35); }
+  :root[data-skin="sakura"] .choice:hover { border-color: #c8372d; }
+  :root[data-skin="sakura"] .skin select { background-color: rgba(255, 255, 255, 0.6); }
+
+  /* ---------- Abyss: sunlight fading into the deep, bubbles rising ---------- */
+  :root[data-skin="abyss"] {
+    --felt: #05405a;
+    --felt-deep: #010a14;
+    --felt-line: rgba(120, 230, 255, 0.32);
+    --felt-ink: #e8fbff;
+    --felt-ink-dim: rgba(232, 251, 255, 0.68);
+    --card: #f1fbfa;
+    --card-edge: #9fd6d6;
+    --card-shadow: rgba(0, 10, 20, 0.6);
+    --back: #0b8090;
+    --back-2: #05303f;
+    --back-line: rgba(160, 255, 240, 0.45);
+    --back-edge: #3ef2d0;
+    --red: #e8384f;
+    --black: #0b2a3d;
+    --brass: #3ef2d0;
+    --brass-hover: #84f9e4;
+    --brass-soft: rgba(62, 242, 208, 0.3);
+    --on-brass: #012028;
+    --red-soft: #ff8a98;
+    --mint: #ffe08a;
+    --mint-soft: rgba(255, 224, 138, 0.35);
+    --ui-font: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+    --display-font: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+    --rank-font: "Josefin Sans", "Futura", "Century Gothic", sans-serif;
+    --body-bg: linear-gradient(180deg, #0f86a3 0%, #06506e 22%, #032a44 52%, #011426 78%, #01070f 100%);
+    --btn-bg: rgba(120, 230, 255, 0.10);
+    --btn-bg-hover: rgba(120, 230, 255, 0.24);
+    --scrim: rgba(1, 10, 20, 0.78);
+    --toast-bg: rgba(2, 26, 43, 0.96);
+    --toast-ink: #e8fbff;
+    --panel-bg: rgba(3, 34, 54, 0.92);
+    --r-card: calc(var(--cw) * 0.1);
+    --r-btn: 999px;
+    --r-panel: 20px;
+    --ui-size: 14px;
+  }
+  /* shafts of light swaying from the surface */
+  :root[data-skin="abyss"] body::before {
+    inset: -10% -30% 20% -30%;
+    background: linear-gradient(100deg,
+      transparent 8%, rgba(190, 255, 255, 0.16) 12%, transparent 19%,
+      transparent 30%, rgba(190, 255, 255, 0.10) 35%, transparent 44%,
+      transparent 52%, rgba(190, 255, 255, 0.18) 57%, transparent 63%,
+      transparent 74%, rgba(190, 255, 255, 0.12) 80%, transparent 90%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0, transparent 92%);
+    mask-image: linear-gradient(180deg, #000 0, transparent 92%);
+    animation: rays 9s ease-in-out infinite alternate;
     will-change: transform;
   }
-  @keyframes mesh {
-    0%   { transform: translate3d(-6%, -3%, 0) rotate(0deg) scale(1); }
-    50%  { transform: translate3d(5%, 4%, 0) rotate(8deg) scale(1.1); }
-    100% { transform: translate3d(-2%, 6%, 0) rotate(-6deg) scale(1.04); }
-  }
-  /* glass surfaces */
-  :root[data-skin="glass"] :is(.btn, .skin select, .choice, .key, .tool, .dock-btn, .panel, .toast) {
-    background-color: var(--glass);
-    background-image: var(--glass-sheen);
-    border: 1px solid var(--glass-edge);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.7), inset 0 -1px 1px rgba(255,255,255,0.12), var(--glass-shadow);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
-    backdrop-filter: blur(22px) saturate(180%);
-    color: var(--felt-ink);
-    text-shadow: none;
-    transition: transform 160ms cubic-bezier(.3,.7,.4,1.4), background-color 160ms ease;
-  }
-  :root[data-skin="glass"] .skin select { background-image: var(--glass-sheen), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 0 0, right 12px center; padding-left: 14px; }
-  :root[data-skin="glass"] :is(.btn, .choice, .key, .tool, .dock-btn):hover { background-color: var(--glass-strong); }
-  :root[data-skin="glass"] :is(.btn, .choice, .key, .tool, .dock-btn):active { transform: scale(0.94); }
-  :root[data-skin="glass"] .btn.primary, :root[data-skin="glass"] .key.active, :root[data-skin="glass"] .tool.on {
-    background-color: rgba(10, 132, 255, 0.85); color: #fff; border-color: rgba(255,255,255,0.5);
-  }
-  :root[data-skin="glass"] .key.active small, :root[data-skin="glass"] .tool.on span { color: #fff; }
-  :root[data-skin="glass"] .panel { border-radius: 30px; }
-  :root[data-skin="glass"] .choice { border-radius: 22px; }
-  :root[data-skin="glass"] .key { border-radius: 18px; }
-  :root[data-skin="glass"] .tool { border-radius: 22px; }
-  /* Apple type: sentence case, tight display tracking, no tracked caps */
-  :root[data-skin="glass"] .brand h1 { font-family: var(--display-font); font-weight: 700; letter-spacing: -0.025em; font-size: 26px; }
-  :root[data-skin="glass"] .panel h2 { font-weight: 700; letter-spacing: -0.03em; font-size: 32px; }
-  :root[data-skin="glass"] :is(.brand .diff, .eyebrow, .stats, .streak, .skin-label, .tool span, .stats-table th, .linkish, .win-stats div) { text-transform: none; letter-spacing: 0; }
-  :root[data-skin="glass"] .brand .diff { color: var(--felt-ink-dim); font-weight: 600; font-size: 15px; }
-  :root[data-skin="glass"] .eyebrow { color: var(--brass); font-weight: 600; font-size: 13px; }
-  :root[data-skin="glass"] .stats b, :root[data-skin="glass"] .dock-mid b, :root[data-skin="glass"] .win-stats b { font-family: var(--rank-font); font-weight: 700; color: var(--felt-ink); }
-  :root[data-skin="glass"] .tool span { font-size: 12px; font-weight: 600; }
-  :root[data-skin="glass"] .btn, :root[data-skin="glass"] .dock-btn, :root[data-skin="glass"] .skin select { font-weight: 600; font-size: 15px; }
-  :root[data-skin="glass"] .stats-table td, :root[data-skin="glass"] .stats-table th { border-color: rgba(120,120,128,0.2); }
-  /* spider cards: white, big nested radius, rounded numerals */
-  :root[data-skin="glass"] .card.up { background: var(--card); border: 1px solid var(--card-edge); box-shadow: 0 1px 1px rgba(0,0,0,0.04), 0 4px 14px var(--card-shadow); }
-  :root[data-skin="glass"] .card .corner { font-weight: 700; letter-spacing: -0.02em; }
-  :root[data-skin="glass"] .card .corner .s { font-family: system-ui, sans-serif; }
-  :root[data-skin="glass"] .card.down, :root[data-skin="glass"] .stock .stack .back {
+  /* bubbles: two layers of rings rising */
+  :root[data-skin="abyss"] body::after {
+    inset: 0;
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 40%),
-      radial-gradient(80% 60% at 20% 20%, #ff9f0a 0%, transparent 60%),
-      radial-gradient(80% 70% at 90% 80%, #5e5ce6 0%, transparent 65%),
-      linear-gradient(160deg, #ff375f, #bf5af2);
-    border: 1px solid var(--back-edge);
-    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.35), 0 2px 8px var(--card-shadow);
+      radial-gradient(circle at 14% 82%, transparent 0 3px, rgba(210, 255, 255, 0.6) 3.4px 4.4px, transparent 5px),
+      radial-gradient(circle at 70% 58%, transparent 0 5px, rgba(210, 255, 255, 0.45) 5.4px 6.6px, transparent 7.2px),
+      radial-gradient(circle at 40% 30%, transparent 0 2px, rgba(210, 255, 255, 0.6) 2.4px 3.2px, transparent 3.8px),
+      radial-gradient(circle at 88% 12%, transparent 0 3.5px, rgba(210, 255, 255, 0.5) 3.9px 4.9px, transparent 5.5px);
+    background-size: 280px 560px;
+    animation: bubbles 12s linear infinite;
+    will-change: background-position;
   }
-  :root[data-skin="glass"] .col::before, :root[data-skin="glass"] .done .slot, :root[data-skin="glass"] .stock .slot {
-    border: 1px solid var(--glass-edge); background: var(--glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  :root[data-skin="abyss"]::before {
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 70%, transparent 0 2px, rgba(210, 255, 255, 0.5) 2.4px 3.2px, transparent 3.8px),
+      radial-gradient(circle at 82% 34%, transparent 0 4px, rgba(210, 255, 255, 0.4) 4.4px 5.4px, transparent 6px),
+      radial-gradient(1.5px 1.5px at 55% 90%, rgba(62, 242, 208, 0.9) 50%, transparent 60%),
+      radial-gradient(1.5px 1.5px at 8% 40%, rgba(62, 242, 208, 0.8) 50%, transparent 60%);
+    background-size: 380px 700px;
+    animation: bubbles2 17s linear infinite;
   }
-  :root[data-skin="glass"] .done .mini { background: var(--card); border-color: var(--card-edge); font-family: system-ui, sans-serif; }
-  :root[data-skin="glass"] .card.selected { box-shadow: 0 0 0 3px var(--brass), 0 10px 24px rgba(10,132,255,0.35); }
-  :root[data-skin="glass"] .card.hint { box-shadow: 0 0 0 3px #34c759, 0 10px 24px rgba(52,199,89,0.35); }
-  :root[data-skin="glass"] .done .slot.landed::after { border-color: var(--brass); }
+  @keyframes rays { from { transform: translateX(-6%) skewX(-6deg); opacity: 0.7; } to { transform: translateX(6%) skewX(5deg); opacity: 1; } }
+  @keyframes bubbles { to { background-position: 30px -560px; } }
+  @keyframes bubbles2 { to { background-position: -40px -700px; } }
+  :root[data-skin="abyss"] :is(.btn, .skin select, .choice, .key, .tool, .dock-btn) {
+    border: 1px solid rgba(120, 230, 255, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 18px rgba(0, 10, 20, 0.4);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  }
+  :root[data-skin="abyss"] :is(.choice, .key, .tool) { border-radius: 16px; }
+  :root[data-skin="abyss"] .btn.primary { background: linear-gradient(135deg, #84f9e4, #3ef2d0 50%, #1aa7c4); color: #012028; border-color: transparent; font-weight: 700; }
+  :root[data-skin="abyss"] :is(.brand h1, .panel h2) {
+    font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    background: linear-gradient(180deg, #ffffff, #84f9e4 60%, #3ecbf2); -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 12px rgba(62, 242, 208, 0.55));
+  }
+  :root[data-skin="abyss"] .brand h1 { font-size: 20px; }
+  :root[data-skin="abyss"] :is(.brand .diff, .eyebrow) { letter-spacing: 0.24em; }
+  :root[data-skin="abyss"] :is(.stats b, .dock-mid b, .side-stats b) { color: #84f9e4; text-shadow: 0 0 12px rgba(62, 242, 208, 0.7); }
+  :root[data-skin="abyss"] .panel { border: 1px solid rgba(120, 230, 255, 0.4); box-shadow: 0 0 60px rgba(62, 242, 208, 0.2), 0 30px 80px rgba(0, 5, 12, 0.8); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+  :root[data-skin="abyss"] .choice:hover { border-color: #3ef2d0; box-shadow: 0 0 20px rgba(62, 242, 208, 0.45); }
+  :root[data-skin="abyss"] :is(.stats-table td, .stats-table th) { border-color: rgba(120, 230, 255, 0.24); }
+  :root[data-skin="abyss"] .skin select option { background: #032236; color: #e8fbff; }
+
   @media (prefers-reduced-motion: reduce) {
-    :root[data-skin="glass"] body::after { animation: none; }
-    :root[data-skin="glass"] :is(.btn, .choice, .key, .tool, .dock-btn):active { transform: none; }
+    :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"]) body::before,
+    :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"]) body::after,
+    :root:is([data-skin="neon"],[data-skin="inferno"],[data-skin="sakura"],[data-skin="abyss"])::before { animation: none; }
   }
+  /* ---------- epic themes: cards ---------- */
+  /* Neon: black glass with a glowing tube edge; cyan for black suits, hot pink for red */
+  :root[data-skin="neon"] .card.up {
+    background: linear-gradient(165deg, #22104a, #0b0420 70%);
+    border: 1.5px solid rgba(41, 240, 255, 0.75);
+    box-shadow: 0 0 8px rgba(41, 240, 255, 0.45), inset 0 0 10px rgba(41, 240, 255, 0.14), 0 3px 8px rgba(0, 0, 0, 0.6);
+  }
+  :root[data-skin="neon"] .card.up.red { border-color: rgba(255, 79, 163, 0.8); box-shadow: 0 0 8px rgba(255, 46, 151, 0.5), inset 0 0 10px rgba(255, 46, 151, 0.16), 0 3px 8px rgba(0, 0, 0, 0.6); }
+  :root[data-skin="neon"] .card.up :is(.corner, .pip) { color: #6ff6ff; text-shadow: 0 0 8px rgba(41, 240, 255, 0.95); }
+  :root[data-skin="neon"] .card.up.red :is(.corner, .pip) { color: #ff6db3; text-shadow: 0 0 8px rgba(255, 46, 151, 0.95); }
+  :root[data-skin="neon"] :is(.card.down, .stock .stack .back) {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.3) 0 1px, transparent 1px calc(var(--cw) * 0.2)),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.3) 0 1px, transparent 1px calc(var(--cw) * 0.2)),
+      linear-gradient(180deg, #ffb347 0%, #ff2e97 45%, #6a22e0 100%);
+    border: 1px solid #ffe14d;
+    box-shadow: inset 0 0 0 2px #120826, 0 0 10px rgba(255, 46, 151, 0.5), 0 2px 4px rgba(0, 0, 0, 0.6);
+  }
+  :root[data-skin="neon"] :is(.col::before, .done .slot, .stock .slot) { border: 1px solid rgba(255, 70, 220, 0.5); box-shadow: inset 0 0 12px rgba(255, 46, 151, 0.2); }
+  :root[data-skin="neon"] .done .mini { background: linear-gradient(165deg, #22104a, #0b0420); border-color: rgba(41, 240, 255, 0.7); text-shadow: 0 0 8px currentColor; }
+
+  /* Inferno: obsidian slabs, bone and molten ink */
+  :root[data-skin="inferno"] .card.up {
+    background: linear-gradient(165deg, #33221c, #140c0a 75%);
+    border: 1px solid rgba(255, 150, 70, 0.6);
+    box-shadow: inset 0 1px 0 rgba(255, 200, 140, 0.22), inset 0 -8px 14px rgba(255, 80, 10, 0.10), 0 3px 9px rgba(0, 0, 0, 0.7);
+  }
+  :root[data-skin="inferno"] .card.up :is(.corner, .pip) { color: #f6e9cf; text-shadow: 0 1px 0 #000; }
+  :root[data-skin="inferno"] .card.up.red :is(.corner, .pip) { color: #ff6a26; text-shadow: 0 0 9px rgba(255, 90, 20, 0.9); }
+  :root[data-skin="inferno"] .card .corner { font-weight: 900; }
+  :root[data-skin="inferno"] :is(.card.down, .stock .stack .back) {
+    background:
+      repeating-linear-gradient(55deg, transparent 0 calc(var(--cw) * 0.11), rgba(255, 170, 60, 0.55) calc(var(--cw) * 0.11) calc(var(--cw) * 0.13)),
+      repeating-linear-gradient(-55deg, transparent 0 calc(var(--cw) * 0.11), rgba(255, 110, 30, 0.45) calc(var(--cw) * 0.11) calc(var(--cw) * 0.13)),
+      radial-gradient(circle at 50% 55%, #c23a06 0%, #5a0f02 55%, #1f0502 100%);
+    border: 1px solid #ff9d2e;
+    box-shadow: inset 0 0 0 2px #140806, 0 0 10px rgba(255, 100, 20, 0.45), 0 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  :root[data-skin="inferno"] :is(.col::before, .done .slot, .stock .slot) { border: 1px solid rgba(255, 140, 60, 0.45); box-shadow: inset 0 0 14px rgba(255, 90, 20, 0.18); }
+  :root[data-skin="inferno"] .done .mini { background: linear-gradient(165deg, #33221c, #140c0a); border-color: rgba(255, 150, 70, 0.6); }
+
+  /* Sakura: ivory paper, sumi and vermilion; indigo wave backs */
+  :root[data-skin="sakura"] .card.up { background: linear-gradient(180deg, #fffefb, #fbf3ea); border: 1px solid #cbb8ae; box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 2px 5px rgba(90, 40, 55, 0.22); }
+  :root[data-skin="sakura"] .card .corner { font-weight: 800; }
+  :root[data-skin="sakura"] :is(.card.down, .stock .stack .back) {
+    background:
+      radial-gradient(circle at 50% 100%, transparent 0 38%, rgba(255,255,255,0.55) 39% 46%, transparent 47% 62%, rgba(255,255,255,0.55) 63% 70%, transparent 71%) 0 0 / calc(var(--cw) * 0.36) calc(var(--cw) * 0.18),
+      radial-gradient(circle at 0 100%, transparent 0 38%, rgba(255,255,255,0.4) 39% 46%, transparent 47%) calc(var(--cw) * 0.18) calc(var(--cw) * 0.09) / calc(var(--cw) * 0.36) calc(var(--cw) * 0.18),
+      linear-gradient(170deg, #34467e, #1a2447);
+    border: 1px solid #141b38;
+    box-shadow: inset 0 0 0 calc(var(--cw) * 0.045) #fffdf8, inset 0 0 0 calc(var(--cw) * 0.06) #c8372d, 0 2px 4px rgba(90, 40, 55, 0.3);
+  }
+  :root[data-skin="sakura"] :is(.col::before, .done .slot, .stock .slot) { border: 1.5px dashed rgba(200, 55, 45, 0.4); }
+
+  /* Abyss: pearl cards, sea-glass backs */
+  :root[data-skin="abyss"] .card.up {
+    background: linear-gradient(165deg, #ffffff, #dcf3f1 70%, #c4ebea);
+    border: 1px solid #8fd0d0;
+    box-shadow: inset 0 1px 0 #fff, 0 0 10px rgba(62, 242, 208, 0.18), 0 4px 10px rgba(0, 10, 20, 0.5);
+  }
+  :root[data-skin="abyss"] .card .corner { font-weight: 700; }
+  :root[data-skin="abyss"] :is(.card.down, .stock .stack .back) {
+    background:
+      radial-gradient(circle at 50% 0, transparent 0 46%, rgba(160, 255, 240, 0.5) 47% 54%, transparent 55%) 0 0 / calc(var(--cw) * 0.26) calc(var(--cw) * 0.2),
+      radial-gradient(circle at 50% 0, transparent 0 46%, rgba(160, 255, 240, 0.35) 47% 54%, transparent 55%) calc(var(--cw) * 0.13) calc(var(--cw) * 0.1) / calc(var(--cw) * 0.26) calc(var(--cw) * 0.2),
+      linear-gradient(170deg, #12a0ad, #05303f);
+    border: 1px solid #3ef2d0;
+    box-shadow: inset 0 0 0 2px #032236, 0 0 10px rgba(62, 242, 208, 0.3), 0 2px 5px rgba(0, 10, 20, 0.6);
+  }
+  :root[data-skin="abyss"] :is(.col::before, .done .slot, .stock .slot) { border: 1px solid rgba(120, 230, 255, 0.4); box-shadow: inset 0 0 14px rgba(62, 242, 208, 0.14); }
   /* ---------- theme picker ---------- */
   .skin { display: flex; align-items: center; gap: 6px; }
   .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
@@ -977,21 +1159,7 @@
     100% { box-shadow: 0 0 0 0 transparent; }
   }
   @keyframes ring { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(1.7); } }
-  /* Éditorial: hairline rules and tracked serif UI */
-  :root[data-skin="paper"] .stats, :root[data-skin="noir"] .stats,
-  :root[data-skin="paper"] .stock .label, :root[data-skin="noir"] .stock .label { font-family: "Poppins", var(--ui-font); font-size: 10.5px; letter-spacing: 0.16em; }
-  :root[data-skin="paper"] .btn, :root[data-skin="noir"] .btn,
-  :root[data-skin="paper"] .skin select, :root[data-skin="noir"] .skin select { font-family: "Poppins", var(--ui-font); font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 500; }
-  :root[data-skin="paper"] .brand h1, :root[data-skin="noir"] .brand h1 { font-weight: 500; font-style: italic; letter-spacing: 0; }
-  :root[data-skin="paper"] .panel h2, :root[data-skin="noir"] .panel h2 { font-weight: 500; }
-  :root[data-skin="paper"] .panel p, :root[data-skin="noir"] .panel p { font-size: 17px; }
-  :root[data-skin="paper"] .card .corner .s, :root[data-skin="noir"] .card .corner .s { font-family: system-ui, sans-serif; }
-  :root[data-skin="paper"] .card.up { box-shadow: 0 1px 0 var(--card-edge), 0 1px 2px var(--card-shadow); }
-  :root[data-skin="noir"] .card.up { border-color: var(--card-edge); box-shadow: 0 0 0 1px rgba(201,163,94,0.12), 0 1px 3px var(--card-shadow); }
-  /* iPS: geometric ranks, dot-style stats */
-  :root[data-skin="ips"] .card .corner { font-weight: 600; letter-spacing: 0; }
-  :root[data-skin="ips"] .brand h1 { font-weight: 600; letter-spacing: -0.01em; }
-  :root[data-skin="ips"] .stats span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--brass); margin-right: 7px; vertical-align: 1px; }
+
   @media (max-width: 620px) {
     .brand h1 { font-size: 18px; }
     .stats { gap: 10px; font-size: 11px; }
@@ -999,17 +1167,34 @@
     .btn { padding: 6px 9px; font-size: 12px; }
     .stock .label { display: none; }
     .skin-label { display: none; }
-    :root { --gutter: 2px; }
+    :root { --gutter: 1px; }
     .app { gap: 6px; }
-    .bar { gap: 6px 10px; }
+    .bar { gap: 6px 10px; padding-inline: 5px; }
     .bar .stats, .controls #undo, .controls #hint { display: none; }
     .piles { justify-content: center; gap: 18px; }
     .done .slot { width: calc(var(--cw) * 0.5); height: calc(var(--ch) * 0.5); }
     .done .mini { font-size: calc(var(--cw) * 0.22); }
-    /* Phone card face in every theme: rank and suit nearly half the card wide, one big pip low and centred */
-    .card .corner { top: calc(var(--cw) * 0.03); left: calc(var(--cw) * 0.06); gap: calc(var(--cw) * 0.01); font-size: max(13px, calc(var(--cw) * 0.42)); letter-spacing: -0.03em; line-height: 0.95; }
-    .card .corner .s { font-size: max(11px, calc(var(--cw) * 0.34)); }
-    .card .pip { right: auto; left: 50%; transform: translateX(-50%); bottom: calc(var(--cw) * 0.08); font-size: calc(var(--cw) * 0.7); opacity: 1; }
+    /* Phone card face in every theme. Ten columns leave each card only ~37px wide, so the face is all index:
+       the rank fills the top-left, the suit sits top-right, and one big pip is centred below. Cards are also
+       drawn taller on phones (see --chr) and fanned so each face-up card shows its whole rank row. */
+    :root[data-skin] .app .card .corner {
+      top: calc(var(--cw) * 0.05); left: calc(var(--cw) * 0.07); right: calc(var(--cw) * 0.06);
+      justify-content: space-between; gap: 0;
+      font-size: calc(var(--cw) * 0.58 * var(--rank-scale, 0.9)); height: calc(var(--cw) * 0.56);
+      font-weight: 700; letter-spacing: -0.04em; line-height: 1;
+    }
+    :root[data-skin] .app .card .corner .s { font-family: system-ui, "Segoe UI Symbol", sans-serif; font-size: calc(var(--cw) * 0.46); letter-spacing: 0; }
+    :root[data-skin] .app .card .corner.ten .r { letter-spacing: -0.1em; font-size: 0.86em; }
+    :root[data-skin] .app .card .corner.ten .s { font-size: calc(var(--cw) * 0.4); }
+    :root[data-skin] .app .card .pip { right: auto; left: 50%; transform: translateX(-50%); bottom: calc(var(--cw) * 0.1); font-size: calc(var(--cw) * 0.9); opacity: 1; }
+    :root[data-skin="classic"] { --rank-scale: 1; }
+    :root[data-skin="felt"] { --rank-scale: 0.9; }
+    :root[data-skin="walnut"] { --rank-scale: 0.86; }
+    :root:is([data-skin="deco"],[data-skin="inferno"]) { --rank-scale: 0.78; }
+    :root:is([data-skin="aurora"],[data-skin="neon"]) { --rank-scale: 0.68; }
+    :root[data-skin="sakura"] { --rank-scale: 0.9; }
+    :root[data-skin="abyss"] { --rank-scale: 0.94; }
+    :root[data-skin="abyss"] .app .card .corner .r { transform: translateY(0.08em); }
     /* Bottom dock: undo · moves/time · hint */
     .dock { display: flex; align-items: center; justify-content: space-between; padding: 4px 6px 0; }
     .dock-btn { font-size: 15px; padding: 12px 0; min-width: 92px; text-align: center; background: rgba(255,255,255,0.14); border-color: transparent; }
@@ -1027,6 +1212,25 @@
     .panel p { font-size: 13px; }
     .stats-table { font-size: 12px; }
   }
+  /* ---------- hint, selection and drop target: one look that every theme's card styling can't hide ---------- */
+  :root[data-skin] .card.up.selected { box-shadow: 0 0 0 3px var(--brass), 0 0 0 4.5px rgba(0,0,0,0.35), 0 0 16px 2px var(--brass), 0 8px 16px rgba(0,0,0,0.45); }
+  :root[data-skin] .card.up.hint {
+    --hint-c: #ffd23f;
+    box-shadow: 0 0 0 3px var(--hint-c), 0 0 0 5px rgba(0,0,0,0.5), 0 0 20px 6px var(--hint-c);
+    animation: hintMove 560ms ease-in-out infinite alternate;
+  }
+  :root[data-skin] .card.up.hint-dest, :root[data-skin] .col.target > .card.up:last-child {
+    --hint-c: #35e07f;
+    box-shadow: 0 0 0 3px var(--hint-c), 0 0 0 5px rgba(0,0,0,0.5), 0 0 20px 6px var(--hint-c);
+  }
+  :root[data-skin] .card.up.hint-dest { animation: hintGlow 560ms ease-in-out infinite alternate; }
+  :root[data-skin] .col.hint-target:empty::before, :root[data-skin] .col.target:empty::before {
+    border: 2px solid #35e07f; box-shadow: 0 0 0 2px rgba(0,0,0,0.4), 0 0 20px 4px rgba(53,224,127,0.8), inset 0 0 18px rgba(53,224,127,0.35);
+  }
+  @keyframes hintMove { from { transform: translateY(0); } to { transform: translateY(calc(var(--cw) * -0.09)); } }
+  @keyframes hintGlow { from { filter: brightness(1); } to { filter: brightness(1.12); } }
+  @media (prefers-reduced-motion: reduce) { :root[data-skin] .card.up.hint, :root[data-skin] .card.up.hint-dest { animation: none; } }
+
   /* ---------- tablet & desktop ---------- */
   @media (min-width: 621px) {
     .app { width: 100%; max-width: 1440px; margin: 0 auto; padding-inline: max(24px, env(safe-area-inset-left, 0px)) max(24px, env(safe-area-inset-right, 0px)); gap: 14px; }
@@ -1042,6 +1246,18 @@
     .choice { padding: 18px 8px 16px; }
     .choice .suits { font-size: 28px; }
     .choice .name { font-size: 15px; }
+  }
+  /* phones held sideways: keep the bar on one line and give the height to the cards */
+  @media (min-width: 621px) and (max-height: 520px) {
+    .app { gap: 6px; padding-block: max(6px, env(safe-area-inset-top, 0px)) max(6px, env(safe-area-inset-bottom, 0px)); }
+    .bar, .piles { width: 100%; }
+    .bar { flex-wrap: nowrap; }
+    .brand h1 { font-size: 20px; }
+    .skin-label, .stats .score { display: none; }
+    .piles { height: calc(var(--ch) * 0.5 + 6px); }
+    .done .slot, .stock .slot, .stock .stack .back { width: calc(var(--cw) * 0.5); height: calc(var(--ch) * 0.5); }
+    .stock .stack { height: calc(var(--ch) * 0.5); }
+    .stock .label { padding-top: 0; }
   }
   @media (min-width: 621px) and (hover: hover) and (pointer: fine) {
     .stock:hover .stack { transform: translateY(-2px); }
@@ -1073,15 +1289,15 @@
   const SAVE_KEY = 'spider-solitaire-save-v1';
   const SKIN_KEY = 'spider-solitaire-skin';
   const SKINS = {
-    felt: 'Felt',
-    paper: 'Éditorial',
-    noir: 'Éditorial noir',
-    ips: 'iPS',
     classic: 'Classic',
+    felt: 'Felt',
     walnut: 'Walnut',
     deco: 'Walnut Deco',
     aurora: 'Aurora',
-    glass: 'Glass',
+    neon: 'Neon Drive',
+    inferno: 'Inferno',
+    sakura: 'Sakura',
+    abyss: 'Abyss',
   };
 
   // Unbiased integer in [0, n) from the browser's cryptographic RNG (rejection sampling
@@ -1213,6 +1429,16 @@
     return g;
   }
 
+  // Length of the same-suit descending run that ends just above index `end` of a column.
+  function sameRunLen(col, end) {
+    let n = 0;
+    for (let i = end - 1; i >= 0 && col[i].up; i--) {
+      if (n && !(col[i].suit === col[i + 1].suit && col[i].rank === col[i + 1].rank + 1)) break;
+      n++;
+    }
+    return n;
+  }
+
   // Best-first list of legal moves, used by hint and double-click.
   function findMoves(g, onlyFrom) {
     const out = [];
@@ -1227,7 +1453,7 @@
           if (t === c) continue;
           const dest = g.cols[t];
           if (!canDrop(dest, card)) continue;
-          let score;
+          let score, lateral = false;
           if (!dest.length) {
             if (i === 0) continue;                 // whole column to empty column: pointless
             score = 1 + (col[i - 1].up ? 0 : 2);   // uncovering a face-down card is worth it
@@ -1236,12 +1462,17 @@
             const sameSuit = top.suit === card.suit;
             const breaksRun = i > 0 && col[i - 1].up && col[i - 1].rank === card.rank + 1 && col[i - 1].suit === card.suit;
             if (breaksRun && !sameSuit) continue; // never split a good run onto a worse spot
+            const onParent = i > 0 && col[i - 1].up && col[i - 1].rank === card.rank + 1;
+            // Sideways shuffles that gain nothing: off one valid parent onto another that is no better
+            if (onParent && !sameSuit) lateral = true;
+            if (breaksRun && sameSuit) lateral = sameRunLen(dest, dest.length) <= sameRunLen(col, i);
             score = sameSuit ? 10 : 4;
             if (i > 0 && !col[i - 1].up) score += 3;
             if (i > 0 && col[i - 1].up && col[i - 1].rank === card.rank + 1 && col[i - 1].suit !== card.suit) score += 2;
             score += (col.length - i) * 0.1;       // prefer longer runs
           }
-          out.push({ from: c, idx: i, to: t, score });
+          if (lateral) score = 0.1;
+          out.push({ from: c, idx: i, to: t, score, lateral });
         }
       }
     }
@@ -1337,7 +1568,7 @@
       onPointerDown,
       'data-id': card.id,
     },
-      card.up && h('div', { className: 'corner' }, RANKS[card.rank], h('span', { className: 's' }, SUITS[card.suit])),
+      card.up && h('div', { className: 'corner' + (card.rank === 10 ? ' ten' : '') }, h('span', { className: 'r' }, RANKS[card.rank]), h('span', { className: 's' }, SUITS[card.suit])),
       card.up && h('div', { className: 'pip' }, SUITS[card.suit]),
     );
   }
@@ -1407,7 +1638,7 @@
     const [drag, setDrag] = useState(null);        // { col, idx, x, y, ox, oy, w }
     const [hover, setHover] = useState(null);      // target column under drag
     const [toast, setToast] = useState(null);
-    const [metrics, setMetrics] = useState({ cw: 72, h: 600 });
+    const [metrics, setMetrics] = useState({ cw: 72, h: 600, gap: 10, ratio: 1.42 });
     const [skin, setSkin] = useState(() => { try { return SKINS[localStorage.getItem(SKIN_KEY)] ? localStorage.getItem(SKIN_KEY) : 'classic'; } catch (e) { return 'classic'; } });
     const [busy, setBusy] = useState(false);          // true while a completed run is being cleared
     const [celebrate, setCelebrate] = useState(null); // runs flying to the foundation
@@ -1420,6 +1651,7 @@
     const lastTapRef = useRef({ id: null, t: 0 });
     const toastTimer = useRef(null);
     const sweepTimer = useRef(null);
+    const hintTimer = useRef(null);
 
     // Theme
     useEffect(() => {
@@ -1448,7 +1680,7 @@
     // Timer
     useEffect(() => {
       if (!game || !game.started || game.won || screen !== 'play') return;
-      const t = setInterval(() => setGame(g => (g && !g.won ? { ...g, elapsed: g.elapsed + 1 } : g)), 1000);
+      const t = setInterval(() => { if (!document.hidden) setGame(g => (g && !g.won ? { ...g, elapsed: g.elapsed + 1 } : g)); }, 1000);
       return () => clearInterval(t);
     }, [game && game.started, game && game.won, screen]);
 
@@ -1458,14 +1690,19 @@
       if (!el) return;
       const measure = () => {
         const r = el.getBoundingClientRect();
-        const gap = Math.max(2, Math.min(10, r.width * 0.012));
-        // Phones keep the original sizing; tablets/desktops get bigger cards, limited by height so long columns still fit
-        const big = window.innerWidth > 620;
-        const cap = big ? Math.min(124, Math.floor(r.height / 4.4)) : 96;
-        const cw = Math.max(30, Math.min(Math.max(cap, 72), Math.floor((r.width - 9 * gap) / 10)));
-        setMetrics({ cw, h: r.height, gap });
+        const phone = window.innerWidth <= 620;
+        // Phones: ten columns have to share the width, so spend as little as possible on gaps
+        const gap = phone ? 2 : Math.max(2, Math.min(10, r.width * 0.012));
+        // Tablets/desktops get bigger cards, limited by the window height so long columns still fit.
+        // (Window height, not the tableau's: the tableau's own height depends on the card size.)
+        const cap = phone ? 96 : Math.max(48, Math.min(124, Math.floor((window.innerHeight - 90) / 5.4)));
+        const cw = Math.max(30, Math.min(cap, Math.floor((r.width - 9 * gap) / 10 * 10) / 10));
+        // Narrow cards are drawn taller so the rank, suit and pip can all be bigger
+        const ratio = cw < 48 ? 1.56 : 1.42;
+        setMetrics({ cw, h: r.height, gap, ratio });
         document.documentElement.style.setProperty('--cw', cw + 'px');
         document.documentElement.style.setProperty('--gap', gap + 'px');
+        document.documentElement.style.setProperty('--chr', ratio);
       };
       measure();
       const ro = new ResizeObserver(measure);
@@ -1613,7 +1850,8 @@
     const deal = useCallback(() => {
       if (!game || game.won || busy) return;
       if (!game.stock.length) { say('The stock is empty.'); return; }
-      if (game.cols.some(c => !c.length)) { say('Fill every empty column before dealing.'); return; }
+      const onTable = game.cols.reduce((n, c) => n + c.length, 0);
+      if (game.cols.some(c => !c.length) && onTable >= 10) { say('Fill every empty column before dealing.'); return; }
       const stockEl = document.querySelector('#stock .stack');
       captureFlight(game.stock[game.stock.length - 1], () => stockEl);
       commit(applyDeal(game));
@@ -1629,15 +1867,22 @@
 
     const showHint = useCallback(() => {
       if (!game || game.won) return;
-      const moves = findMoves(game);
+      if (busy) return;
+      const moves = findMoves(game).filter(m => !m.lateral);
       setSel(null);
+      clearTimeout(hintTimer.current);
       if (!moves.length) {
-        say(game.stock.length ? 'No moves left — deal from the stock.' : 'No moves left. Try undo or a new game.');
+        setHint(null);
+        say(game.stock.length ? 'No useful moves — deal from the stock.' : 'No useful moves left. Try undo or a new game.');
         return;
       }
-      setHint(moves[0]);
-      setTimeout(() => setHint(null), 1800);
-    }, [game, say]);
+      const m = moves[0];
+      const card = game.cols[m.from][m.idx], dest = game.cols[m.to];
+      const name = c => RANKS[c.rank] + SUITS[c.suit];
+      say(`Hint: move ${name(card)} ${dest.length ? 'onto ' + name(dest[dest.length - 1]) : 'to the empty column'}`);
+      setHint(m);
+      hintTimer.current = setTimeout(() => setHint(null), 2600);
+    }, [game, say, busy]);
 
     const autoMove = useCallback((col, idx) => {
       const moves = findMoves(game, col).filter(m => m.idx === idx);
@@ -1757,19 +2002,25 @@
     }, [game, sel, tryMove, autoMove, columnAt, say]);
 
     // ------------------------------------------------ layout helpers
-    const ch = metrics.cw * 1.42;
-    const narrow = metrics.cw < 48;                       // phone portrait: fan cards out further so ranks stay readable
+    const ch = metrics.cw * (metrics.ratio || 1.42);
+    const narrow = metrics.cw < 48;                       // phone portrait: fan cards out so the whole rank row stays readable
     const roomy = !narrow && metrics.h > ch * 6.5;        // tall tablet screens: use the spare height to fan out too
-    const upStep = ch * (narrow ? 0.52 : roomy ? 0.36 : 0.27);
+    // never less than the height of the rank row when there is room (otherwise a Q loses its tail and reads as an O)
+    const upStep = narrow ? metrics.cw * 0.66 : Math.max(ch * (roomy ? 0.36 : 0.27), metrics.cw * 0.5);
     const offsets = (col) => {
-      const downOff = ch * (narrow ? 0.17 : roomy ? 0.15 : 0.13), upOff = upStep;
-      let total = 0;
+      const downOff = narrow ? metrics.cw * 0.2 : ch * (roomy ? 0.15 : 0.13), upOff = upStep;
+      let downTotal = 0, upTotal = 0;
       const raw = col.map((c, i) => (i === 0 ? 0 : (col[i - 1].up ? upOff : downOff)));
-      for (const r of raw) total += r;
+      col.forEach((c, i) => { if (i > 0) { if (col[i - 1].up) upTotal += raw[i]; else downTotal += raw[i]; } });
       const avail = Math.max(ch, metrics.h - 6) - ch;
-      const k = total > avail ? avail / total : 1;
+      // Too tall? Squeeze the face-down cards first (down to a sliver), then the face-up ones.
+      let kd = 1, ku = 1;
+      if (downTotal + upTotal > avail) {
+        kd = Math.max(0.45, Math.min(1, (avail - upTotal) / (downTotal || 1)));
+        if (downTotal * kd + upTotal > avail) ku = Math.max(0, (avail - downTotal * kd) / (upTotal || 1));
+      }
       const tops = []; let acc = 0;
-      for (let i = 0; i < raw.length; i++) { acc += raw[i] * k; tops.push(acc); }
+      for (let i = 0; i < raw.length; i++) { acc += raw[i] * (i > 0 && col[i - 1].up ? ku : kd); tops.push(acc); }
       return tops;
     };
 
@@ -1827,10 +2078,11 @@
               const ghost = drag && drag.col === c && i >= drag.idx;
               const selected = sel && sel.col === c && i >= sel.idx;
               const hinted = hint && hint.from === c && i >= hint.idx;
+              const hintDest = isHintTarget && i === col.length - 1;
               const locked = card.up && i < rs;
               return h(Card, {
                 key: card.id, card, top: tops[i],
-                className: (ghost ? 'ghost ' : '') + (selected ? 'selected ' : '') + (hinted ? 'hint ' : '') + (locked ? 'locked' : ''),
+                className: (ghost ? 'ghost ' : '') + (selected ? 'selected ' : '') + (hinted ? 'hint ' : '') + (hintDest ? 'hint-dest ' : '') + (locked ? 'locked' : ''),
                 onPointerDown: onCardDown(c, i),
               });
             }),
