@@ -45,7 +45,7 @@ delete the home-screen icon and add it again.
 - Controls: tap a card to send it to its best spot, or drag it. Undo (Ctrl+Z), Hint (H),
   Deal (D / tap the stock).
 - Shuffle: Fisher–Yates over `crypto.getRandomValues` (rejection sampling, no modulo bias).
-- Themes (`data-skin` on `<html>`): Classic (default: bright teal cloth, Oswald ranks, red lace backs),
+- Themes (`data-skin` on `<html>`): Neon Drive is the default on a first visit. Classic (bright teal cloth, Oswald ranks, red lace backs),
   Felt, Walnut, Walnut Deco, Aurora (animated northern lights), Neon Drive (synthwave sun over a scrolling
   grid, glowing cards), Inferno (obsidian cards over a lava glow, rising embers), Sakura (washi paper, red
   sun, falling petals, indigo wave backs) and Abyss (light shafts and bubbles, pearl cards). Each is a
