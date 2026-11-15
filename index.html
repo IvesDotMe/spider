@@ -1027,6 +1027,27 @@
     .panel p { font-size: 13px; }
     .stats-table { font-size: 12px; }
   }
+  /* ---------- tablet & desktop ---------- */
+  @media (min-width: 621px) {
+    .app { width: 100%; max-width: 1440px; margin: 0 auto; padding-inline: max(24px, env(safe-area-inset-left, 0px)) max(24px, env(safe-area-inset-right, 0px)); gap: 14px; }
+    /* line the bar and the piles up with the ten tableau columns */
+    .bar, .piles { width: min(100%, calc(10 * var(--cw) + 9 * var(--gap))); align-self: center; box-sizing: border-box; }
+    .piles { height: calc(var(--ch) * 0.62 + 12px); }
+    .done { gap: max(4px, calc(var(--gap) * 0.8)); }
+    .brand h1 { font-size: 26px; }
+    .stock .label b { font-size: 20px; }
+    .panel { width: min(540px, 100%); padding: 34px 34px 28px; }
+    .panel h2 { font-size: 36px; }
+    .choices { gap: 10px; }
+    .choice { padding: 18px 8px 16px; }
+    .choice .suits { font-size: 28px; }
+    .choice .name { font-size: 15px; }
+  }
+  @media (min-width: 621px) and (hover: hover) and (pointer: fine) {
+    .stock:hover .stack { transform: translateY(-2px); }
+    .stock .stack { transition: transform 140ms ease; }
+    .done .slot { transition: border-color 140ms ease; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .card, .btn, .choice { transition: none; }
     .card.complete, .toast { animation: none; }
@@ -1438,7 +1459,10 @@
       const measure = () => {
         const r = el.getBoundingClientRect();
         const gap = Math.max(2, Math.min(10, r.width * 0.012));
-        const cw = Math.max(30, Math.min(96, Math.floor((r.width - 9 * gap) / 10)));
+        // Phones keep the original sizing; tablets/desktops get bigger cards, limited by height so long columns still fit
+        const big = window.innerWidth > 620;
+        const cap = big ? Math.min(124, Math.floor(r.height / 4.4)) : 96;
+        const cw = Math.max(30, Math.min(Math.max(cap, 72), Math.floor((r.width - 9 * gap) / 10)));
         setMetrics({ cw, h: r.height, gap });
         document.documentElement.style.setProperty('--cw', cw + 'px');
         document.documentElement.style.setProperty('--gap', gap + 'px');
@@ -1735,9 +1759,10 @@
     // ------------------------------------------------ layout helpers
     const ch = metrics.cw * 1.42;
     const narrow = metrics.cw < 48;                       // phone portrait: fan cards out further so ranks stay readable
-    const upStep = ch * (narrow ? 0.52 : 0.27);
+    const roomy = !narrow && metrics.h > ch * 6.5;        // tall tablet screens: use the spare height to fan out too
+    const upStep = ch * (narrow ? 0.52 : roomy ? 0.36 : 0.27);
     const offsets = (col) => {
-      const downOff = ch * (narrow ? 0.17 : 0.13), upOff = upStep;
+      const downOff = ch * (narrow ? 0.17 : roomy ? 0.15 : 0.13), upOff = upStep;
       let total = 0;
       const raw = col.map((c, i) => (i === 0 ? 0 : (col[i - 1].up ? upOff : downOff)));
       for (const r of raw) total += r;
