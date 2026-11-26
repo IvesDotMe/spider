@@ -1125,7 +1125,7 @@
   /* ---------- shuffle picker (New game screen) ---------- */
   .shuffle-pick { margin: 2px 0 16px; }
   .shuffle-pick .eyebrow { margin-bottom: 8px; }
-  .shuffle-opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .shuffle-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(86px, 1fr)); gap: 6px; }
   .shuffle-opts .btn { padding: 9px 2px; min-width: 0; white-space: nowrap; }
   .shuffle-sub { margin-top: 9px; min-height: 3em; font-size: 12px; line-height: 1.5; color: var(--felt-ink-dim); text-wrap: balance; }
   /* ---------- theme picker ---------- */
@@ -1411,18 +1411,19 @@
     return out;
   }
 
-  // The four ways to shuffle, chosen on the New game screen.
+  // The ways to shuffle, chosen on the New game screen.
   const SHUFFLE_KEY = 'spider-solitaire-shuffle';
   const SHUFFLES = {
     balanced: { name: 'Balanced', sub: 'Random, with the streaks trimmed: the least clumpy of ten shuffles. Fewer doubles and three-of-a-kinds.' },
     pure:     { name: 'Pure',     sub: 'One perfectly uniform shuffle, nothing adjusted. Real randomness, streaks and all.' },
     dealer:   { name: 'Dealer',   sub: 'A new deck riffled five times and cut, the way people really shuffle. Under-mixed on purpose: traces of the original order survive.' },
     friendly: { name: 'Friendly', sub: 'The most playable of ten shuffles: more cards that fit on each other at the start and after each deal.' },
+    hardcore: { name: 'Hardcore', sub: 'The least playable of twenty shuffles: few cards fit on each other, at the start or after any deal. No mercy, and no promise it can be won.' },
   };
   const CANDIDATES = 10;
-  function pickBest(nSuits, score) {
+  function pickBest(nSuits, score, tries) {
     let best = null, bestScore = Infinity;
-    for (let t = 0; t < CANDIDATES; t++) {
+    for (let t = 0; t < (tries || CANDIDATES); t++) {
       const deck = shuffle(freshDeck(nSuits));
       const sc = score(deck);
       if (sc < bestScore) { best = deck; bestScore = sc; }
@@ -1432,6 +1433,7 @@
   function buildDeck(nSuits, mode) {
     if (mode === 'pure') return shuffle(freshDeck(nSuits));
     if (mode === 'friendly') return pickBest(nSuits, d => -friendliness(d));
+    if (mode === 'hardcore') return pickBest(nSuits, friendliness, 20);
     if (mode === 'dealer') {
       let deck = freshDeck(nSuits);
       for (let i = 0; i < 5; i++) deck = riffle(deck);        // five, not the ten or so a full mix of 104 cards needs

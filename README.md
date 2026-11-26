@@ -45,9 +45,9 @@ delete the home-screen icon and add it again.
 - Controls: tap a card to send it to its best spot, or drag it. Undo (Ctrl+Z), Hint (H),
   Deal (D / tap the stock).
 - Shuffle: each card draws a 64-bit key from `crypto.getRandomValues` and the deck is sorted by key (uniform).
-  The New game screen offers four ways to deal (saved in `spider-solitaire-shuffle`): Balanced (default; the
+  The New game screen offers five ways to deal (saved in `spider-solitaire-shuffle`): Balanced (default; the
   least clumpy of ten shuffles), Pure (one uniform shuffle), Dealer (a new deck riffled five times, deliberately under-mixed, with the
-  Gilbert–Shannon–Reeds model, then cut) and Friendly (the most playable of ten shuffles).
+  Gilbert–Shannon–Reeds model, then cut) Friendly (the most playable of ten shuffles) and Hardcore (the least playable of twenty).
 - Themes (`data-skin` on `<html>`): Neon Drive is the default on a first visit. Classic (bright teal cloth, Oswald ranks, red lace backs),
   Felt, Walnut, Walnut Deco, Aurora (animated northern lights), Neon Drive (synthwave sun over a scrolling
   grid, glowing cards), Inferno (obsidian cards over a lava glow, rising embers), Sakura (washi paper, red
