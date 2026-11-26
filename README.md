@@ -59,3 +59,12 @@ delete the home-screen icon and add it again.
   and says the move in a toast. Pressing it again steps through every option: useful moves best-first, then
   dealing, then sideways moves.
 - Storage: `localStorage` keys `spider-solitaire-save-v1` (game + undo history), `spider-solitaire-skin` (theme) and `spider-solitaire-stats-v1` (record: played/won per difficulty, best score/time/fewest moves, current and best streak; a game counts when won or abandoned after at least one move).
+
+## Winning
+
+Every win plays one of eight full-screen celebrations, picked at random and never the same twice in a row
+(fireworks, confetti cannons, the classic bouncing-card cascade, falling glyph rain, an emoji storm, a warp
+jump, disco lights with a bouncing logo, rainbow comets), under a random headline. The win screen also fetches
+a prize from the internet (a dog or cat photo, a joke, or a fact) with a built-in list as the offline fallback,
+and has buttons for another prize, another show, and a link to a random odd website. Skipped when the device
+asks for reduced motion.
