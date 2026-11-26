@@ -44,7 +44,10 @@ delete the home-screen icon and add it again.
   Dealing requires every column to be non-empty.
 - Controls: tap a card to send it to its best spot, or drag it. Undo (Ctrl+Z), Hint (H),
   Deal (D / tap the stock).
-- Shuffle: Fisher–Yates over `crypto.getRandomValues` (rejection sampling, no modulo bias).
+- Shuffle: each card draws a 64-bit key from `crypto.getRandomValues` and the deck is sorted by key (uniform).
+  A deal shuffles ten decks this way and keeps the least "clumpy" one (fewest same-rank cards stacked or side
+  by side, fewest three-of-a-kind rows), because a plain uniform deal looks streaky. `DEAL_CANDIDATES = 1`
+  switches that off.
 - Themes (`data-skin` on `<html>`): Neon Drive is the default on a first visit. Classic (bright teal cloth, Oswald ranks, red lace backs),
   Felt, Walnut, Walnut Deco, Aurora (animated northern lights), Neon Drive (synthwave sun over a scrolling
   grid, glowing cards), Inferno (obsidian cards over a lava glow, rising embers), Sakura (washi paper, red
@@ -53,5 +56,6 @@ delete the home-screen icon and add it again.
 - Phones: ten columns leave each card ~37px wide on an iPhone, so cards are drawn taller there and the
   face is all index (rank top-left, suit top-right, one big pip); face-up cards fan out by a full rank row.
 - Hint: highlights the cards to move (gold, bobbing) and the card or empty column to move them to (green),
-  and says the move in a toast. Sideways moves that gain nothing are never suggested.
+  and says the move in a toast. Pressing it again steps through every option: useful moves best-first, then
+  dealing, then sideways moves.
 - Storage: `localStorage` keys `spider-solitaire-save-v1` (game + undo history), `spider-solitaire-skin` (theme) and `spider-solitaire-stats-v1` (record: played/won per difficulty, best score/time/fewest moves, current and best streak; a game counts when won or abandoned after at least one move).

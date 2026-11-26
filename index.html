@@ -1227,6 +1227,7 @@
   :root[data-skin] .col.hint-target:empty::before, :root[data-skin] .col.target:empty::before {
     border: 2px solid #35e07f; box-shadow: 0 0 0 2px rgba(0,0,0,0.4), 0 0 20px 4px rgba(53,224,127,0.8), inset 0 0 18px rgba(53,224,127,0.35);
   }
+  :root[data-skin] .stock.hint-stock .stack { border-radius: var(--r-card); box-shadow: 0 0 0 3px #ffd23f, 0 0 0 5px rgba(0,0,0,0.5), 0 0 20px 6px #ffd23f; animation: hintMove 560ms ease-in-out infinite alternate; }
   @keyframes hintMove { from { transform: translateY(0); } to { transform: translateY(calc(var(--cw) * -0.09)); } }
   @keyframes hintGlow { from { filter: brightness(1); } to { filter: brightness(1.12); } }
   @media (prefers-reduced-motion: reduce) { :root[data-skin] .card.up.hint, :root[data-skin] .card.up.hint-dest { animation: none; } }
@@ -1313,16 +1314,24 @@
     return Math.floor(Math.random() * n);
   }
 
-  // Fisher–Yates: every one of the 104! orderings is equally likely.
+  // Shuffle by random keys: every card draws a 64-bit number from the browser's cryptographic RNG and the
+  // deck is sorted by it. With keys this wide ties are effectively impossible, so all orderings are equally likely.
   function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = randInt(i + 1);
-      [a[i], a[j]] = [a[j], a[i]];
+    const n = a.length;
+    let keys;
+    if (window.crypto && window.crypto.getRandomValues && typeof BigUint64Array !== 'undefined') {
+      keys = window.crypto.getRandomValues(new BigUint64Array(n));
+    } else {
+      keys = Array.from({ length: n }, () => randInt(0x100000000) * 0x100000 + randInt(0x100000));
     }
+    const order = Array.from({ length: n }, (_, i) => i);
+    order.sort((x, y) => (keys[x] < keys[y] ? -1 : keys[x] > keys[y] ? 1 : x - y));
+    const out = order.map(i => a[i]);
+    for (let i = 0; i < n; i++) a[i] = out[i];
     return a;
   }
 
-  function buildDeck(nSuits) {
+  function freshDeck(nSuits) {
     // 104 cards. Suit indices used: 1 → spades; 2 → spades, hearts; 4 → all.
     const suitSet = nSuits === 1 ? [0] : nSuits === 2 ? [0, 1] : [0, 1, 2, 3];
     const copies = 8 / suitSet.length;
@@ -1333,7 +1342,52 @@
         for (let r = 1; r <= 13; r++) deck.push({ id: id++, rank: r, suit: s, up: false });
       }
     }
-    return shuffle(deck);
+    return deck;
+  }
+
+  // How "clumpy" a deal looks. A truly random 104-card deal has about seven places where the same rank lands
+  // twice in a row, and usually a dealt row with three or four of a kind. That is what random looks like, but
+  // it reads as a bad shuffle. Counted here, in the order the cards will actually appear on the table:
+  //   - the same rank directly on top of itself in a column (initial layout, then each dealt row),
+  //   - the same rank side by side in a row,
+  //   - a rank showing up three or more times in one row of ten.
+  function clumpiness(deck) {
+    const cols = Array.from({ length: 10 }, () => []);
+    const rows = [];
+    let k = 0;
+    for (let c = 0; c < 10; c++) for (let i = 0, n = c < 4 ? 6 : 5; i < n; i++) cols[c].push(deck[k++].rank);
+    rows.push(cols.map(c => c[c.length - 1]));                  // the ten face-up cards you start with
+    const chunks = [];
+    while (k < deck.length) chunks.push(deck.slice(k, (k += 10)).map(c => c.rank));
+    for (let d = chunks.length - 1; d >= 0; d--) {              // the stock is dealt last chunk first
+      rows.push(chunks[d]);
+      for (let c = 0; c < 10; c++) cols[c].push(chunks[d][c]);
+    }
+    let score = 0;
+    for (const col of cols) for (let i = 1; i < col.length; i++) if (col[i] === col[i - 1]) score += 2;
+    for (const row of rows) {
+      const seen = {};
+      for (let i = 0; i < row.length; i++) {
+        if (i && row[i] === row[i - 1]) score += 2;
+        seen[row[i]] = (seen[row[i]] || 0) + 1;
+      }
+      for (const r in seen) if (seen[r] >= 3) score += (seen[r] - 2) * 2;
+    }
+    return score;
+  }
+
+  // Deal: shuffle several decks independently and keep the least clumpy one. Each candidate is a fair
+  // shuffle; choosing among them only trims the streaky deals that look "not random". Set DEAL_CANDIDATES
+  // to 1 for a plain uniform shuffle.
+  const DEAL_CANDIDATES = 10;
+  function buildDeck(nSuits) {
+    let best = null, bestScore = Infinity;
+    for (let t = 0; t < DEAL_CANDIDATES; t++) {
+      const deck = shuffle(freshDeck(nSuits));
+      const sc = clumpiness(deck);
+      if (sc < bestScore) { best = deck; bestScore = sc; }
+    }
+    return best;
   }
 
   function newGame(nSuits) {
@@ -1652,6 +1706,7 @@
     const toastTimer = useRef(null);
     const sweepTimer = useRef(null);
     const hintTimer = useRef(null);
+    const hintCycle = useRef({ key: '', i: 0 });
 
     // Theme
     useEffect(() => {
@@ -1865,24 +1920,47 @@
       setSel(null); setHint(null);
     }, [history, game, busy]);
 
+    // Every press shows the next option: useful moves best-first, then dealing, then the sideways moves.
     const showHint = useCallback(() => {
       if (!game || game.won) return;
       if (busy) return;
-      const moves = findMoves(game).filter(m => !m.lateral);
+      const all = findMoves(game);
+      // several empty columns are one option, not several
+      const seenEmpty = new Set();
+      const moves = all.filter(m => {
+        if (game.cols[m.to].length) return true;
+        const k = m.from + ':' + m.idx;
+        if (seenEmpty.has(k)) return false;
+        seenEmpty.add(k); return true;
+      });
+      const onTable = game.cols.reduce((n, c) => n + c.length, 0);
+      const canDeal = game.stock.length > 0 && !(game.cols.some(c => !c.length) && onTable >= 10);
+      const options = moves.filter(m => !m.lateral);
+      if (canDeal) options.push({ deal: true });
+      options.push(...moves.filter(m => m.lateral));
       setSel(null);
       clearTimeout(hintTimer.current);
-      if (!moves.length) {
+      if (!options.length) {
         setHint(null);
-        say(game.stock.length ? 'No useful moves — deal from the stock.' : 'No useful moves left. Try undo or a new game.');
+        say(game.stock.length ? 'No moves — fill the empty column, then deal.' : 'No moves left. Try undo or a new game.');
         return;
       }
-      const m = moves[0];
-      const card = game.cols[m.from][m.idx], dest = game.cols[m.to];
-      const name = c => RANKS[c.rank] + SUITS[c.suit];
-      say(`Hint: move ${name(card)} ${dest.length ? 'onto ' + name(dest[dest.length - 1]) : 'to the empty column'}`);
+      // same position as the last press → next option; anything changed → start again from the best
+      const key = game.moves + ':' + game.stock.length + ':' + history.length + ':' + game.done.length;
+      const at = hintCycle.current.key === key ? (hintCycle.current.i + 1) % options.length : 0;
+      hintCycle.current = { key, i: at };
+      const m = options[at];
+      const count = options.length > 1 ? ` ${at + 1} of ${options.length}` : '';
+      if (m.deal) {
+        say(`Hint${count}: deal a new row from the stock`);
+      } else {
+        const card = game.cols[m.from][m.idx], dest = game.cols[m.to];
+        const name = c => RANKS[c.rank] + SUITS[c.suit];
+        say(`Hint${count}: move ${name(card)} ${dest.length ? 'onto ' + name(dest[dest.length - 1]) : 'to the empty column'}${m.lateral ? ' (sideways)' : ''}`);
+      }
       setHint(m);
-      hintTimer.current = setTimeout(() => setHint(null), 2600);
-    }, [game, say, busy]);
+      hintTimer.current = setTimeout(() => setHint(null), 3200);
+    }, [game, say, busy, history.length]);
 
     const autoMove = useCallback((col, idx) => {
       const moves = findMoves(game, col).filter(m => m.idx === idx);
@@ -2053,7 +2131,7 @@
             game.done[i] != null && !(celebrate && celebrate.some(r => r.slot === i)) && h('div', { className: 'mini', style: { color: RED[game.done[i]] ? 'var(--red)' : 'var(--black)' } }, SUITS[game.done[i]]),
           )),
         ),
-        h('div', { className: 'stock', id: 'stock', role: 'button', tabIndex: 0, onClick: deal,
+        h('div', { className: 'stock' + (hint && hint.deal ? ' hint-stock' : ''), id: 'stock', role: 'button', tabIndex: 0, onClick: deal,
             onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); deal(); } },
             title: 'Deal a row (D)' },
           h('div', { className: 'label' }, h('b', null, game.stock.length), game.stock.length === 1 ? 'deal left' : 'deals left'),
