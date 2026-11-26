@@ -1122,6 +1122,12 @@
     box-shadow: inset 0 0 0 2px #032236, 0 0 10px rgba(62, 242, 208, 0.3), 0 2px 5px rgba(0, 10, 20, 0.6);
   }
   :root[data-skin="abyss"] :is(.col::before, .done .slot, .stock .slot) { border: 1px solid rgba(120, 230, 255, 0.4); box-shadow: inset 0 0 14px rgba(62, 242, 208, 0.14); }
+  /* ---------- shuffle picker (New game screen) ---------- */
+  .shuffle-pick { margin: 2px 0 16px; }
+  .shuffle-pick .eyebrow { margin-bottom: 8px; }
+  .shuffle-opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .shuffle-opts .btn { padding: 9px 2px; min-width: 0; white-space: nowrap; }
+  .shuffle-sub { margin-top: 9px; min-height: 3em; font-size: 12px; line-height: 1.5; color: var(--felt-ink-dim); text-wrap: balance; }
   /* ---------- theme picker ---------- */
   .skin { display: flex; align-items: center; gap: 6px; }
   .skin-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--felt-ink-dim); font-weight: 600; }
@@ -1376,22 +1382,67 @@
     return score;
   }
 
-  // Deal: shuffle several decks independently and keep the least clumpy one. Each candidate is a fair
-  // shuffle; choosing among them only trims the streaky deals that look "not random". Set DEAL_CANDIDATES
-  // to 1 for a plain uniform shuffle.
-  const DEAL_CANDIDATES = 10;
-  function buildDeck(nSuits) {
+  // How many moves a deal offers as it unfolds: for the ten cards you start with and each dealt row,
+  // count the pairs that can go on one another (same suit counts double).
+  function friendliness(deck) {
+    const rows = [];
+    let k = 0;
+    const first = [];
+    for (let c = 0; c < 10; c++) { k += c < 4 ? 6 : 5; first.push(deck[k - 1]); }
+    rows.push(first);
+    while (k < deck.length) rows.push(deck.slice(k, (k += 10)));
+    let score = 0;
+    for (const row of rows) for (const a of row) for (const b of row) if (a.rank + 1 === b.rank) score += a.suit === b.suit ? 2 : 1;
+    return score;
+  }
+
+  // One riffle shuffle the way hands do it (Gilbert–Shannon–Reeds): cut near the middle, then let cards
+  // fall from either half with odds in proportion to how many each half still holds.
+  function riffle(a) {
+    const n = a.length;
+    let cut = 0;
+    for (let i = 0; i < n; i++) cut += randInt(2);
+    const left = a.slice(0, cut), right = a.slice(cut), out = [];
+    let i = 0, j = 0;
+    while (i < left.length || j < right.length) {
+      const l = left.length - i, r = right.length - j;
+      if (randInt(l + r) < l) out.push(left[i++]); else out.push(right[j++]);
+    }
+    return out;
+  }
+
+  // The four ways to shuffle, chosen on the New game screen.
+  const SHUFFLE_KEY = 'spider-solitaire-shuffle';
+  const SHUFFLES = {
+    balanced: { name: 'Balanced', sub: 'Random, with the streaks trimmed: the least clumpy of ten shuffles. Fewer doubles and three-of-a-kinds.' },
+    pure:     { name: 'Pure',     sub: 'One perfectly uniform shuffle, nothing adjusted. Real randomness, streaks and all.' },
+    dealer:   { name: 'Dealer',   sub: 'A new deck riffled five times and cut, the way people really shuffle. Under-mixed on purpose: traces of the original order survive.' },
+    friendly: { name: 'Friendly', sub: 'The most playable of ten shuffles: more cards that fit on each other at the start and after each deal.' },
+  };
+  const CANDIDATES = 10;
+  function pickBest(nSuits, score) {
     let best = null, bestScore = Infinity;
-    for (let t = 0; t < DEAL_CANDIDATES; t++) {
+    for (let t = 0; t < CANDIDATES; t++) {
       const deck = shuffle(freshDeck(nSuits));
-      const sc = clumpiness(deck);
+      const sc = score(deck);
       if (sc < bestScore) { best = deck; bestScore = sc; }
     }
     return best;
   }
+  function buildDeck(nSuits, mode) {
+    if (mode === 'pure') return shuffle(freshDeck(nSuits));
+    if (mode === 'friendly') return pickBest(nSuits, d => -friendliness(d));
+    if (mode === 'dealer') {
+      let deck = freshDeck(nSuits);
+      for (let i = 0; i < 5; i++) deck = riffle(deck);        // five, not the ten or so a full mix of 104 cards needs
+      const cut = 20 + randInt(deck.length - 40);           // a final cut somewhere in the middle
+      return deck.slice(cut).concat(deck.slice(0, cut));
+    }
+    return pickBest(nSuits, clumpiness);
+  }
 
-  function newGame(nSuits) {
-    const deck = buildDeck(nSuits);
+  function newGame(nSuits, mode) {
+    const deck = buildDeck(nSuits, mode);
     const cols = Array.from({ length: 10 }, () => []);
     let k = 0;
     for (let c = 0; c < 10; c++) {
@@ -1627,7 +1678,7 @@
     );
   }
 
-  function Menu({ resume, onStart, onResume, skin, onSkin, stats, onResetStats }) {
+  function Menu({ resume, onStart, onResume, skin, onSkin, stats, onResetStats, shuffleMode, onShuffle }) {
     return h('div', { className: 'overlay' },
       h('div', { className: 'panel' },
         h('div', { className: 'eyebrow' }, 'Two decks · 104 cards'),
@@ -1642,6 +1693,14 @@
             h('div', { className: 'sub' }, n === 1 ? 'Relaxed' : n === 2 ? 'Classic' : 'Expert'),
           )),
         ),
+        h('div', { className: 'shuffle-pick' },
+          h('div', { className: 'eyebrow' }, 'Shuffle'),
+          h('div', { className: 'shuffle-opts', role: 'radiogroup', 'aria-label': 'Shuffle' },
+            Object.keys(SHUFFLES).map(k => h('button', {
+              key: k, type: 'button', role: 'radio', 'aria-checked': shuffleMode === k,
+              className: 'btn' + (shuffleMode === k ? ' primary' : ''), id: 'shuffle-' + k, onClick: () => onShuffle(k),
+            }, SHUFFLES[k].name))),
+          h('div', { className: 'shuffle-sub' }, SHUFFLES[shuffleMode].sub)),
         resume && h('div', { className: 'row' },
           h('button', { className: 'btn primary', id: 'resume', onClick: onResume },
             `Resume ${DIFFICULTY[resume.suits].toLowerCase()} · ${resume.moves} moves`),
@@ -1694,6 +1753,8 @@
     const [toast, setToast] = useState(null);
     const [metrics, setMetrics] = useState({ cw: 72, h: 600, gap: 10, ratio: 1.42 });
     const [skin, setSkin] = useState(() => { try { return SKINS[localStorage.getItem(SKIN_KEY)] ? localStorage.getItem(SKIN_KEY) : 'neon'; } catch (e) { return 'neon'; } });
+    const [shuffleMode, setShuffleMode] = useState(() => { try { const k = localStorage.getItem(SHUFFLE_KEY); return SHUFFLES[k] ? k : 'balanced'; } catch (e) { return 'balanced'; } });
+    useEffect(() => { try { localStorage.setItem(SHUFFLE_KEY, shuffleMode); } catch (e) {} }, [shuffleMode]);
     const [busy, setBusy] = useState(false);          // true while a completed run is being cleared
     const [celebrate, setCelebrate] = useState(null); // runs flying to the foundation
     const [pulse, setPulse] = useState(-1);           // slot index that just received a run
@@ -1775,8 +1836,8 @@
     const start = useCallback((n) => {
       if (game && !game.won && game.moves > 0) setStats(st => recordAbandon(st, game));
       setRecords([]);
-      setGame(newGame(n)); setHistory([]); setSel(null); setHint(null); setScreen('play');
-    }, [game]);
+      setGame(newGame(n, shuffleMode)); setHistory([]); setSel(null); setHint(null); setScreen('play');
+    }, [game, shuffleMode]);
 
     const reduced = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2104,7 +2165,7 @@
 
     // ------------------------------------------------ render
     if (screen === 'menu' || !game) {
-      return h(Menu, { resume: game, onStart: start, onResume: () => setScreen('play'), skin, onSkin: setSkin, stats, onResetStats: () => setStats(emptyStats()) });
+      return h(Menu, { resume: game, onStart: start, onResume: () => setScreen('play'), skin, onSkin: setSkin, stats, onResetStats: () => setStats(emptyStats()), shuffleMode, onShuffle: setShuffleMode });
     }
 
     return h('div', { className: 'app' },
